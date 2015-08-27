@@ -1,0 +1,41 @@
+
+{% block stylesheets %}            
+<link href="{{ asset('bootstrap-3.3.5-dist/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('css/signin.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}                 
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Inicio de sesion Brasa!</title>
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin" role="form" action="{{ path('login_check') }}" method="post">
+                <h2 class="form-signin-heading">Inicio sesion</h2>
+                
+                <input type="text" class="form-control" placeholder="Usuario" id="username" name="_username" required autofocus>
+                <input type="password" class="form-control" placeholder="Clave" id="password" name="_password" required>                
+
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                  </label>
+                </div>                
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                                
+                <center>
+                {% if error %}
+                    <div id="informacion" class="alert alert-block alert-error fade in" width="10px">                        
+                        <div>{{ error.message }}</div>
+                    </div>    
+                {% endif %}         
+            </form>
+        </div>
+    </body>
+</html>
