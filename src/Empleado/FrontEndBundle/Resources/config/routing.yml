@@ -1,0 +1,3 @@
+empleado_front_end_homepage:
+    path:     /
+    defaults: { _controller: EmpleadoFrontEndBundle:Default:index }

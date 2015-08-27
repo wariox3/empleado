@@ -1,3 +1,7 @@
+empleado_front_end:
+    resource: "@EmpleadoFrontEndBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

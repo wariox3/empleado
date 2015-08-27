@@ -1,0 +1,4 @@
+services:
+#    empleado_front_end.example:
+#        class: Empleado\FrontEndBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
