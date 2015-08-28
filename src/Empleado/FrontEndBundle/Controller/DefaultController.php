@@ -22,7 +22,8 @@ class DefaultController extends Controller
         //$obj = new \Brasa\GeneralBundle\MisClases\CambiarBD();
         //$obj->setUpAppConnection($this);
         //\Brasa\GeneralBundle\MisClases\CambiarBD::setUpAppConnection();
-        
-        return $this->render('EmpleadoFrontEndBundle:General:menu.html.twig', array('Usuario' => 'Usuario'));
+        $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();
+        $arUsuario = $this->get('security.context')->getToken()->getUser();         
+        return $this->render('EmpleadoFrontEndBundle:General:menu.html.twig', array('Usuario' => $arUsuario->getNombre()));
     }      
 }

@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Soga E{% endblock %}</title>        
         {% block stylesheets %}
-            <link href="{{ asset('bootstrap-3.3.5-dist/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />            
+            <link href="{{ asset('bootstrap-3.3.5-dist/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />   
+            <link href="{{ asset('css/general.css') }}" rel="stylesheet" />
         {% endblock %}  
         {% block javascripts %}
             <script src="{{ asset('js/jquery-1.10.2.min.js') }}"></script>

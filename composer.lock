@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d9d44d8c728eae235e6e87157d1243b5",
+    "hash": "29874cf838806a9430e7b29626540e04",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1121,6 +1121,46 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "royopa/fpdf-symfony2",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/royopa/fpdf-symfony2.git",
+                "reference": "2d7290169a78e37a6a598482458f9942a7c576a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/royopa/fpdf-symfony2/zipball/2d7290169a78e37a6a598482458f9942a7c576a6",
+                "reference": "2d7290169a78e37a6a598482458f9942a7c576a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FPDF_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Rodrigo Prado de Jesus",
+                    "email": "royopa@gmail.com"
+                }
+            ],
+            "description": "fpdf vendor for use with symfony2, based on toooni/fpdf",
+            "homepage": "http://github.com/royopa",
+            "time": "2015-07-17 01:43:57"
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "v4.0.1",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -1749,7 +1789,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "royopa/fpdf-symfony2": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

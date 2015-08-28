@@ -20,7 +20,7 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=64, unique=true)
      */
     private $username;
 
@@ -38,7 +38,27 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+    
+    /**
+     * @ORM\Column(name="codigo_empleado_fk", type="integer", nullable=false)
+     */
+    private $codigoEmpleadoFk;  
+    
+    /**
+     * @ORM\Column(type="string", length=250)
+     */
+    private $roles;    
 
+    /**
+     * @ORM\Column(name="numero_identificacion", type="string", length=20)
+     */
+    private $numeroIdentificacion;     
+    
+    /**
+     * @ORM\Column(name="nombre", type="string", length=250)
+     */
+    private $nombre;     
+    
     public function __construct()
     {
         $this->isActive = true;
@@ -65,7 +85,8 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        //return array('ROLE_ADMIN');
+        return array($this->roles);
     }
 
     public function eraseCredentials()
@@ -176,5 +197,87 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set codigoEmpleadoFk
+     *
+     * @param integer $codigoEmpleadoFk
+     * @return User
+     */
+    public function setCodigoEmpleadoFk($codigoEmpleadoFk)
+    {
+        $this->codigoEmpleadoFk = $codigoEmpleadoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoEmpleadoFk
+     *
+     * @return integer 
+     */
+    public function getCodigoEmpleadoFk()
+    {
+        return $this->codigoEmpleadoFk;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return User
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set numeroIdentificacion
+     *
+     * @param string $numeroIdentificacion
+     * @return User
+     */
+    public function setNumeroIdentificacion($numeroIdentificacion)
+    {
+        $this->numeroIdentificacion = $numeroIdentificacion;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroIdentificacion
+     *
+     * @return string 
+     */
+    public function getNumeroIdentificacion()
+    {
+        return $this->numeroIdentificacion;
     }
 }

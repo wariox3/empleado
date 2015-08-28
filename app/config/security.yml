@@ -3,6 +3,9 @@ security:
         Empleado\FrontEndBundle\Entity\User:
             algorithm: bcrypt
  
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
+        
     providers:
         our_db_provider:
             entity:
@@ -32,7 +35,7 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /user, roles: ROLE_USER }
+        - { path: /usuario, roles: ROLE_USER }
         - { path: /admin, roles: ROLE_ADMIN }
         - { path: /.*, roles: ROLE_USER }        
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }        

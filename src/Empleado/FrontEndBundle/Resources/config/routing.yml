@@ -15,3 +15,11 @@ login_check:
 emp_usuario_consulta_pago:
     path:     /usuario/consulta/pago
     defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPago:lista }    
+
+emp_admin_usuario_lista:
+    path:     /admin/usuario/lista
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:lista }
+
+emp_admin_usuario_nuevo:
+    path:     /admin/usuario/nuevo/{codigoUsuario}
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:nuevo }    

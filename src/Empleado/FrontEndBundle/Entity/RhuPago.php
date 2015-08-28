@@ -210,6 +210,10 @@ class RhuPago
      */
     protected $empleadoRel;    
 
+    /**
+     * @ORM\OneToMany(targetEntity="RhuPagoDetalle", mappedBy="pagoRel")
+     */
+    protected $pagosDetallesPagoRel;     
 
     /**
      * Get codigoPagoPk
@@ -1093,5 +1097,45 @@ class RhuPago
     public function getEmpleadoRel()
     {
         return $this->empleadoRel;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pagosDetallesPagoRel = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add pagosDetallesPagoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPagoDetalle $pagosDetallesPagoRel
+     * @return RhuPago
+     */
+    public function addPagosDetallesPagoRel(\Empleado\FrontEndBundle\Entity\RhuPagoDetalle $pagosDetallesPagoRel)
+    {
+        $this->pagosDetallesPagoRel[] = $pagosDetallesPagoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove pagosDetallesPagoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPagoDetalle $pagosDetallesPagoRel
+     */
+    public function removePagosDetallesPagoRel(\Empleado\FrontEndBundle\Entity\RhuPagoDetalle $pagosDetallesPagoRel)
+    {
+        $this->pagosDetallesPagoRel->removeElement($pagosDetallesPagoRel);
+    }
+
+    /**
+     * Get pagosDetallesPagoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPagosDetallesPagoRel()
+    {
+        return $this->pagosDetallesPagoRel;
     }
 }

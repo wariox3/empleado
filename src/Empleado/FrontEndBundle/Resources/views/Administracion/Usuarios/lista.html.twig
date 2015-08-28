@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h3>Pagos</h3>
+        <h3>Usuarios</h3>
     </div>
     {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
             {{ form_errors(form) }}
@@ -25,48 +25,40 @@
         <table  class="table table-striped table-bordered table-condensed table-hover">
             <tr>
                 <th>CÓDIGO</th>
-                <th>NUMERO</th>
-                <th>TIPO</th>                   
-                <th>C. COSTO</th>
-                <th>P. DESDE</th>
-                <th>DESDE</th>
-                <th>HASTA</th>
-                <th style="text-align: right">SALARIO</th>
-                <th style="text-align: right">DEVENGADO</th>
-                <th style="text-align: right">DEDUCCIONES</th>
-                <th style="text-align: right">NETO</th>
+                <th>USUARIO</th>
+                <th>IDENTIFICACION</th>
+                <th>NOMBRE</th>                
+                <th></th>
                 <th></th>
             </tr>
-            {% for arPagos in arPagos %}
+            {% for arUsuarios in arUsuarios %}
             <tr>
-                <td><input type="hidden" name="LblCodigo[]" value="{{ arPagos.codigoPagoPk }}">{{ arPagos.codigoPagoPk }} </td>
-                <td>{{ arPagos.numero  }}</td>
-                <td>{{ arPagos.numero  }}</td>
-                <td>{{ arPagos.numero  }}</td>                
-                <td>{{ arPagos.fechaDesdePago |date("Y/m/d")  }}</td>
-                <td>{{ arPagos.fechaDesde |date("Y/m/d")  }}</td>
-                <td>{{ arPagos.fechaHasta |date("Y/m/d")  }}</td>
-                <td style="text-align: right">{{ arPagos.vrSalario | number_format(2, '.', ',') }}</td>
-                <td style="text-align: right">{{ arPagos.vrDevengado | number_format(2, '.', ',') }}</td>
-                <td style="text-align: right">{{ arPagos.vrDeducciones | number_format(2, '.', ',') }}</td>
-                <td style="text-align: right">{{ arPagos.vrNeto | number_format(2, '.', ',') }}</td>
-                <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arPagos.codigoPagoPk }}">Imprimir</button></td>                
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arUsuarios.id }}">{{ arUsuarios.id }} </td>
+                <td>{{ arUsuarios.username  }}</td>
+                <td>{{ arUsuarios.numeroIdentificacion  }}</td>
+                <td>{{ arUsuarios.nombre  }}</td>                                                
+                <td style="text-align: center"></td>
+                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arUsuarios.id }}" /></td>
             </tr>
             {% endfor %}
         </table>
         <div class="btn-toolbar" style="float: left">
             <div class="btn-group">
-                {{ knp_pagination_render(arPagos) }} 
+                {{ knp_pagination_render(arUsuarios) }} 
             </div>
             <div class="btn-group">
-                <div class="btn btn-default btn-sm">Pagos <span class="badge">{{ arPagos.getTotalItemCount }}</span></div>        
+                <div class="btn btn-default btn-sm">Pagos <span class="badge">{{ arUsuarios.getTotalItemCount }}</span></div>        
             </div>
         </div>                
         <div class="btn-toolbar" style="float: right">                 
             <div class="btn-group">                
                 {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
             </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('emp_admin_usuario_nuevo', {'codigoUsuario': 0}) }}">Nuevo</a>
+            </div>            
         </div>
+            
         
         {{ form_rest(form) }}
     {{ form_end(form) }}
