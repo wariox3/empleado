@@ -28,20 +28,10 @@ class RhuPagoDetalle
     private $codigoCreditoFk;
     
     /**
-     * @ORM\Column(name="codigo_incapacidad_fk", type="integer", nullable=true)
-     */    
-    private $codigoIncapacidadFk;
-    
-    /**
-     * @ORM\Column(name="codigo_licencia_fk", type="integer", nullable=true)
-     */    
-    private $codigoLicenciaFk;    
-    
-    /**
      * @ORM\Column(name="vr_pago", type="float")
      */
-    private $vrPago = 0;     
-
+    private $vrPago = 0;
+    
     /**
      * @ORM\Column(name="operacion", type="integer")
      */
@@ -50,22 +40,27 @@ class RhuPagoDetalle
     /**
      * @ORM\Column(name="vr_pago_operado", type="float")
      */
-    private $vrPagoOperado = 0;    
+    private $vrPagoOperado = 0;
     
     /**
      * @ORM\Column(name="numero_horas", type="float")
      */
-    private $numeroHoras = 0;    
+    private $numeroHoras = 0;
     
     /**
      * @ORM\Column(name="vr_hora", type="float")
      */
-    private $vrHora = 0;     
+    private $vrHora = 0;
     
     /**
      * @ORM\Column(name="porcentaje_aplicado", type="float")
      */
-    private $porcentajeAplicado = 0;    
+    private $porcentajeAplicado = 0;
+    
+    /**
+     * @ORM\Column(name="numero_dias", type="float")
+     */
+    private $numeroDias = 0;     
     
     /**
      * @ORM\Column(name="vr_dia", type="float")
@@ -75,7 +70,7 @@ class RhuPagoDetalle
     /**
      * @ORM\Column(name="vr_total", type="float")
      */
-    private $vrTotal = 0;     
+    private $vrTotal = 0;
     
     /**
      * @ORM\Column(name="detalle", type="string", length=250, nullable=true)
@@ -91,6 +86,11 @@ class RhuPagoDetalle
      * @ORM\Column(name="vr_ingreso_base_cotizacion", type="float")
      */
     private $vrIngresoBaseCotizacion = 0;     
+
+    /**
+     * @ORM\Column(name="vr_ingreso_base_prestacion", type="float")
+     */
+    private $vrIngresoBasePrestacion = 0;    
     
     /**
      * @ORM\Column(name="codigo_programacion_pago_detalle_fk", type="integer", nullable=true)
@@ -107,7 +107,14 @@ class RhuPagoDetalle
      * @ORM\ManyToOne(targetEntity="RhuPagoConcepto", inversedBy="pagosDetallesPagoConceptoRel")
      * @ORM\JoinColumn(name="codigo_pago_concepto_fk", referencedColumnName="codigo_pago_concepto_pk")
      */
-    protected $pagoConceptoRel;     
+    protected $pagoConceptoRel;  
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuCredito", inversedBy="pagosDetallesCreditoRel")
+     * @ORM\JoinColumn(name="codigo_credito_fk", referencedColumnName="codigo_credito_pk")
+     */
+    protected $creditoRel;
+
 
 
     /**
@@ -164,52 +171,6 @@ class RhuPagoDetalle
     public function getCodigoCreditoFk()
     {
         return $this->codigoCreditoFk;
-    }
-
-    /**
-     * Set codigoIncapacidadFk
-     *
-     * @param integer $codigoIncapacidadFk
-     * @return RhuPagoDetalle
-     */
-    public function setCodigoIncapacidadFk($codigoIncapacidadFk)
-    {
-        $this->codigoIncapacidadFk = $codigoIncapacidadFk;
-
-        return $this;
-    }
-
-    /**
-     * Get codigoIncapacidadFk
-     *
-     * @return integer 
-     */
-    public function getCodigoIncapacidadFk()
-    {
-        return $this->codigoIncapacidadFk;
-    }
-
-    /**
-     * Set codigoLicenciaFk
-     *
-     * @param integer $codigoLicenciaFk
-     * @return RhuPagoDetalle
-     */
-    public function setCodigoLicenciaFk($codigoLicenciaFk)
-    {
-        $this->codigoLicenciaFk = $codigoLicenciaFk;
-
-        return $this;
-    }
-
-    /**
-     * Get codigoLicenciaFk
-     *
-     * @return integer 
-     */
-    public function getCodigoLicenciaFk()
-    {
-        return $this->codigoLicenciaFk;
     }
 
     /**
@@ -351,6 +312,29 @@ class RhuPagoDetalle
     }
 
     /**
+     * Set numeroDias
+     *
+     * @param float $numeroDias
+     * @return RhuPagoDetalle
+     */
+    public function setNumeroDias($numeroDias)
+    {
+        $this->numeroDias = $numeroDias;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroDias
+     *
+     * @return float 
+     */
+    public function getNumeroDias()
+    {
+        return $this->numeroDias;
+    }
+
+    /**
      * Set vrDia
      *
      * @param float $vrDia
@@ -466,6 +450,29 @@ class RhuPagoDetalle
     }
 
     /**
+     * Set vrIngresoBasePrestacion
+     *
+     * @param float $vrIngresoBasePrestacion
+     * @return RhuPagoDetalle
+     */
+    public function setVrIngresoBasePrestacion($vrIngresoBasePrestacion)
+    {
+        $this->vrIngresoBasePrestacion = $vrIngresoBasePrestacion;
+
+        return $this;
+    }
+
+    /**
+     * Get vrIngresoBasePrestacion
+     *
+     * @return float 
+     */
+    public function getVrIngresoBasePrestacion()
+    {
+        return $this->vrIngresoBasePrestacion;
+    }
+
+    /**
      * Set codigoProgramacionPagoDetalleFk
      *
      * @param integer $codigoProgramacionPagoDetalleFk
@@ -532,5 +539,28 @@ class RhuPagoDetalle
     public function getPagoConceptoRel()
     {
         return $this->pagoConceptoRel;
+    }
+
+    /**
+     * Set creditoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCredito $creditoRel
+     * @return RhuPagoDetalle
+     */
+    public function setCreditoRel(\Empleado\FrontEndBundle\Entity\RhuCredito $creditoRel = null)
+    {
+        $this->creditoRel = $creditoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get creditoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuCredito 
+     */
+    public function getCreditoRel()
+    {
+        return $this->creditoRel;
     }
 }

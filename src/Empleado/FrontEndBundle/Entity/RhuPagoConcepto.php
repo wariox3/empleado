@@ -71,6 +71,8 @@ class RhuPagoConcepto
      * @ORM\OneToMany(targetEntity="RhuPagoDetalle", mappedBy="pagoConceptoRel")
      */
     protected $pagosDetallesPagoConceptoRel;     
+    
+    
     /**
      * Constructor
      */

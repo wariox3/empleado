@@ -268,6 +268,23 @@ class RhuEmpleado
     protected $pagosEmpleadoRel;    
 
     /**
+     * @ORM\ManyToOne(targetEntity="RhuEntidadSalud", inversedBy="empleadosEntidadSaludRel")
+     * @ORM\JoinColumn(name="codigo_entidad_salud_fk", referencedColumnName="codigo_entidad_salud_pk")
+     */
+    protected $entidadSaludRel;     
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuEntidadPension", inversedBy="empleadosEntidadPensionRel")
+     * @ORM\JoinColumn(name="codigo_entidad_pension_fk", referencedColumnName="codigo_entidad_pension_pk")
+     */
+    protected $entidadPensionRel;
+   
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuCargo", inversedBy="empleadosCargoRel")
+     * @ORM\JoinColumn(name="codigo_cargo_fk", referencedColumnName="codigo_cargo_pk")
+     */
+    protected $cargoRel;
+    /**
      * Constructor
      */
     public function __construct()
@@ -1397,5 +1414,74 @@ class RhuEmpleado
     public function getPagosEmpleadoRel()
     {
         return $this->pagosEmpleadoRel;
+    }
+
+    /**
+     * Set entidadSaludRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuEntidadSalud $entidadSaludRel
+     * @return RhuEmpleado
+     */
+    public function setEntidadSaludRel(\Empleado\FrontEndBundle\Entity\RhuEntidadSalud $entidadSaludRel = null)
+    {
+        $this->entidadSaludRel = $entidadSaludRel;
+
+        return $this;
+    }
+
+    /**
+     * Get entidadSaludRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuEntidadSalud 
+     */
+    public function getEntidadSaludRel()
+    {
+        return $this->entidadSaludRel;
+    }
+
+    /**
+     * Set entidadPensionRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuEntidadPension $entidadPensionRel
+     * @return RhuEmpleado
+     */
+    public function setEntidadPensionRel(\Empleado\FrontEndBundle\Entity\RhuEntidadPension $entidadPensionRel = null)
+    {
+        $this->entidadPensionRel = $entidadPensionRel;
+
+        return $this;
+    }
+
+    /**
+     * Get entidadPensionRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuEntidadPension 
+     */
+    public function getEntidadPensionRel()
+    {
+        return $this->entidadPensionRel;
+    }
+
+    /**
+     * Set cargoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCargo $cargoRel
+     * @return RhuEmpleado
+     */
+    public function setCargoRel(\Empleado\FrontEndBundle\Entity\RhuCargo $cargoRel = null)
+    {
+        $this->cargoRel = $cargoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get cargoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuCargo 
+     */
+    public function getCargoRel()
+    {
+        return $this->cargoRel;
     }
 }

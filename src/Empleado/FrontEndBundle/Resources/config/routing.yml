@@ -12,6 +12,10 @@ login:
 login_check:
     pattern:   /login_check    
     
+emp_usuario_consulta_carta_laboral:
+    path:     /usuario/consulta/carta/laboral
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaCartaLaboral:lista }
+
 emp_usuario_consulta_pago:
     path:     /usuario/consulta/pago
     defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPago:lista }    

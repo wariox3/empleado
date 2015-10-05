@@ -104,7 +104,26 @@ class RhuCentroCosto
     private $fechaUltimoPagoCesantias;    
     
     
+    /**
+     * @ORM\OneToMany(targetEntity="RhuPago", mappedBy="centroCostoRel")
+     */
+    protected $pagosCentroCostoRel;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuPeriodoPago", inversedBy="centrosCostosPeriodoPagoRel")
+     * @ORM\JoinColumn(name="codigo_periodo_pago_fk", referencedColumnName="codigo_periodo_pago_pk")
+     */
+    protected $periodoPagoRel;
 
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pagosCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get codigoCentroCostoPk
@@ -505,5 +524,61 @@ class RhuCentroCosto
     public function getFechaUltimoPagoCesantias()
     {
         return $this->fechaUltimoPagoCesantias;
+    }
+
+    /**
+     * Add pagosCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPago $pagosCentroCostoRel
+     * @return RhuCentroCosto
+     */
+    public function addPagosCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuPago $pagosCentroCostoRel)
+    {
+        $this->pagosCentroCostoRel[] = $pagosCentroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove pagosCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPago $pagosCentroCostoRel
+     */
+    public function removePagosCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuPago $pagosCentroCostoRel)
+    {
+        $this->pagosCentroCostoRel->removeElement($pagosCentroCostoRel);
+    }
+
+    /**
+     * Get pagosCentroCostoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPagosCentroCostoRel()
+    {
+        return $this->pagosCentroCostoRel;
+    }
+
+    /**
+     * Set periodoPagoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPeriodoPago $periodoPagoRel
+     * @return RhuCentroCosto
+     */
+    public function setPeriodoPagoRel(\Empleado\FrontEndBundle\Entity\RhuPeriodoPago $periodoPagoRel = null)
+    {
+        $this->periodoPagoRel = $periodoPagoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get periodoPagoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuPeriodoPago 
+     */
+    public function getPeriodoPagoRel()
+    {
+        return $this->periodoPagoRel;
     }
 }

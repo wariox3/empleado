@@ -55,7 +55,12 @@ class RhuPago
     /**
      * @ORM\Column(name="fecha_desde_pago", type="date", nullable=true)
      */    
-    private $fechaDesdePago;    
+    private $fechaDesdePago; 
+    
+    /**
+     * @ORM\Column(name="fecha_hasta_pago", type="date", nullable=true)
+     */    
+    private $fechaHastaPago;
     
     /**
      * @ORM\Column(name="vr_salario", type="float")
@@ -172,7 +177,12 @@ class RhuPago
     /**
      * @ORM\Column(name="vr_ingreso_base_cotizacion", type="float")
      */
-    private $vrIngresoBaseCotizacion = 0;    
+    private $vrIngresoBaseCotizacion = 0; 
+    
+    /**
+     * @ORM\Column(name="vr_ingreso_base_prestacion", type="float")
+     */
+    private $vrIngresoBasePrestacion = 0;
     
     /**
      * @ORM\Column(name="codigo_centro_costo_fk", type="integer", nullable=true)
@@ -192,17 +202,28 @@ class RhuPago
     /**
      * @ORM\Column(name="estado_pagado", type="boolean")
      */    
-    private $estadoPagado = 0;         
+    private $estadoPagado = 0; 
+    
+    /**
+     * @ORM\Column(name="estado_pagado_banco", type="boolean")
+     */    
+    private $estadoPagadoBanco = 0;
     
     /**
      * @ORM\Column(name="comentarios", type="string", length=500, nullable=true)
      */    
-    private $comentarios;    
+    
+    private $comentarios;  
     
     /**
-     * @ORM\Column(name="exportado_contabilidad", type="boolean")
+     * @ORM\Column(name="estado_contabilizado", type="boolean")
      */    
-    private $exportadoContabilidad = 0;     
+    private $estadoContabilizado = 0;
+    
+    /**
+     * @ORM\Column(name="archivo_exportado_banco", type="boolean")
+     */    
+    private $archivoExportadoBanco = 0;     
     
     /**
      * @ORM\ManyToOne(targetEntity="RhuEmpleado", inversedBy="pagosEmpleadoRel")
@@ -213,7 +234,34 @@ class RhuPago
     /**
      * @ORM\OneToMany(targetEntity="RhuPagoDetalle", mappedBy="pagoRel")
      */
-    protected $pagosDetallesPagoRel;     
+    protected $pagosDetallesPagoRel;  
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuPagoTipo", inversedBy="pagosPagoTipoRel")
+     * @ORM\JoinColumn(name="codigo_pago_tipo_fk", referencedColumnName="codigo_pago_tipo_pk")
+     */
+    protected $pagoTipoRel;
+
+   /**
+     * @ORM\ManyToOne(targetEntity="RhuCentroCosto", inversedBy="pagosCentroCostoRel")
+     * @ORM\JoinColumn(name="codigo_centro_costo_fk", referencedColumnName="codigo_centro_costo_pk")
+     */
+    protected $centroCostoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuCreditoPago", mappedBy="pagoRel")
+     */
+    protected $creditosPagosPagoRel;
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pagosDetallesPagoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->creditosPagosPagoRel = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get codigoPagoPk
@@ -407,6 +455,29 @@ class RhuPago
     public function getFechaDesdePago()
     {
         return $this->fechaDesdePago;
+    }
+
+    /**
+     * Set fechaHastaPago
+     *
+     * @param \DateTime $fechaHastaPago
+     * @return RhuPago
+     */
+    public function setFechaHastaPago($fechaHastaPago)
+    {
+        $this->fechaHastaPago = $fechaHastaPago;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaHastaPago
+     *
+     * @return \DateTime 
+     */
+    public function getFechaHastaPago()
+    {
+        return $this->fechaHastaPago;
     }
 
     /**
@@ -939,6 +1010,29 @@ class RhuPago
     }
 
     /**
+     * Set vrIngresoBasePrestacion
+     *
+     * @param float $vrIngresoBasePrestacion
+     * @return RhuPago
+     */
+    public function setVrIngresoBasePrestacion($vrIngresoBasePrestacion)
+    {
+        $this->vrIngresoBasePrestacion = $vrIngresoBasePrestacion;
+
+        return $this;
+    }
+
+    /**
+     * Get vrIngresoBasePrestacion
+     *
+     * @return float 
+     */
+    public function getVrIngresoBasePrestacion()
+    {
+        return $this->vrIngresoBasePrestacion;
+    }
+
+    /**
      * Set codigoCentroCostoFk
      *
      * @param integer $codigoCentroCostoFk
@@ -1031,6 +1125,29 @@ class RhuPago
     }
 
     /**
+     * Set estadoPagadoBanco
+     *
+     * @param boolean $estadoPagadoBanco
+     * @return RhuPago
+     */
+    public function setEstadoPagadoBanco($estadoPagadoBanco)
+    {
+        $this->estadoPagadoBanco = $estadoPagadoBanco;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoPagadoBanco
+     *
+     * @return boolean 
+     */
+    public function getEstadoPagadoBanco()
+    {
+        return $this->estadoPagadoBanco;
+    }
+
+    /**
      * Set comentarios
      *
      * @param string $comentarios
@@ -1054,26 +1171,49 @@ class RhuPago
     }
 
     /**
-     * Set exportadoContabilidad
+     * Set estadoContabilizado
      *
-     * @param boolean $exportadoContabilidad
+     * @param boolean $estadoContabilizado
      * @return RhuPago
      */
-    public function setExportadoContabilidad($exportadoContabilidad)
+    public function setEstadoContabilizado($estadoContabilizado)
     {
-        $this->exportadoContabilidad = $exportadoContabilidad;
+        $this->estadoContabilizado = $estadoContabilizado;
 
         return $this;
     }
 
     /**
-     * Get exportadoContabilidad
+     * Get estadoContabilizado
      *
      * @return boolean 
      */
-    public function getExportadoContabilidad()
+    public function getEstadoContabilizado()
     {
-        return $this->exportadoContabilidad;
+        return $this->estadoContabilizado;
+    }
+
+    /**
+     * Set archivoExportadoBanco
+     *
+     * @param boolean $archivoExportadoBanco
+     * @return RhuPago
+     */
+    public function setArchivoExportadoBanco($archivoExportadoBanco)
+    {
+        $this->archivoExportadoBanco = $archivoExportadoBanco;
+
+        return $this;
+    }
+
+    /**
+     * Get archivoExportadoBanco
+     *
+     * @return boolean 
+     */
+    public function getArchivoExportadoBanco()
+    {
+        return $this->archivoExportadoBanco;
     }
 
     /**
@@ -1097,13 +1237,6 @@ class RhuPago
     public function getEmpleadoRel()
     {
         return $this->empleadoRel;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pagosDetallesPagoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1137,5 +1270,84 @@ class RhuPago
     public function getPagosDetallesPagoRel()
     {
         return $this->pagosDetallesPagoRel;
+    }
+
+    /**
+     * Set pagoTipoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuPagoTipo $pagoTipoRel
+     * @return RhuPago
+     */
+    public function setPagoTipoRel(\Empleado\FrontEndBundle\Entity\RhuPagoTipo $pagoTipoRel = null)
+    {
+        $this->pagoTipoRel = $pagoTipoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get pagoTipoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuPagoTipo 
+     */
+    public function getPagoTipoRel()
+    {
+        return $this->pagoTipoRel;
+    }
+
+    /**
+     * Set centroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCentroCosto $centroCostoRel
+     * @return RhuPago
+     */
+    public function setCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuCentroCosto $centroCostoRel = null)
+    {
+        $this->centroCostoRel = $centroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get centroCostoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuCentroCosto 
+     */
+    public function getCentroCostoRel()
+    {
+        return $this->centroCostoRel;
+    }
+
+    /**
+     * Add creditosPagosPagoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCreditoPago $creditosPagosPagoRel
+     * @return RhuPago
+     */
+    public function addCreditosPagosPagoRel(\Empleado\FrontEndBundle\Entity\RhuCreditoPago $creditosPagosPagoRel)
+    {
+        $this->creditosPagosPagoRel[] = $creditosPagosPagoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove creditosPagosPagoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCreditoPago $creditosPagosPagoRel
+     */
+    public function removeCreditosPagosPagoRel(\Empleado\FrontEndBundle\Entity\RhuCreditoPago $creditosPagosPagoRel)
+    {
+        $this->creditosPagosPagoRel->removeElement($creditosPagosPagoRel);
+    }
+
+    /**
+     * Get creditosPagosPagoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCreditosPagosPagoRel()
+    {
+        return $this->creditosPagosPagoRel;
     }
 }
