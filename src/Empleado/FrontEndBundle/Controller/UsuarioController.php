@@ -28,7 +28,8 @@ class UsuarioController extends Controller
         $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();      
         if($codigoUsuario != 0) {
             $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
-        }    
+        }
+            
         $form = $this->createForm(new UserType(), $arUsuario);
         $form->handleRequest($request);
         if ($form->isValid()) {            
