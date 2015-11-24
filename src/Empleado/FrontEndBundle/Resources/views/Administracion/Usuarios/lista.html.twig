@@ -37,7 +37,7 @@
                 <td>{{ arUsuarios.username  }}</td>
                 <td>{{ arUsuarios.numeroIdentificacion  }}</td>
                 <td>{{ arUsuarios.nombre  }}</td>                                                
-                <td style="text-align: center"><a href="{{ path('emp_admin_usuario_nuevo',{'codigoUsuario': arUsuarios.id})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
+                <td style="text-align: center"><a href="{{ path('emp_admin_usuario_editar',{'codigoUsuario': arUsuarios.id})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
                 <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arUsuarios.id }}" /></td>
             </tr>
             {% endfor %}

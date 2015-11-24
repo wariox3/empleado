@@ -29,7 +29,6 @@ class UsuarioController extends Controller
         if($codigoUsuario != 0) {
             $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
         }
-            
         $form = $this->createForm(new UserType(), $arUsuario);
         $form->handleRequest($request);
         if ($form->isValid()) {            
@@ -50,6 +49,8 @@ class UsuarioController extends Controller
                     $arUsuario->setPassword(password_hash($arUsuario->getPassword(), PASSWORD_BCRYPT));                    
                     $em->flush();
                     return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
+                }else {
+                    echo "<br /><br /><br /><br />No existe el empleado";
                 }                
             } else {
                 echo "<br /><br /><br /><br />Este usuario ya existe";
@@ -58,7 +59,50 @@ class UsuarioController extends Controller
         return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:nuevo.html.twig', array(
             'form' => $form->createView(),
         ));
-    }    
+    } 
+    
+    public function editarAction($codigoUsuario) {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();      
+        
+        $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
+        
+        $form = $this->createFormBuilder()
+            ->add('numeroIdentificacion', 'text', array('data' => $arUsuario->getNumeroIdentificacion(), 'required' => true))
+            ->add('password', 'password', array('data' => '', 'required' => false))                
+            ->add('guardar', 'submit', array('label' => 'Guardar'))            
+            ->getForm();                    
+        $form->handleRequest($request);
+        if ($form->isValid()) {            
+            $em->persist($arUsuario);
+            //$arUsuario = $form->getData();
+            $arUsuarioValidar = new \Empleado\FrontEndBundle\Entity\Usuario();             
+            $arUsuarioValidar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $form->get('numeroIdentificacion')->getData()));
+            if(count($arUsuarioValidar) >= 0) {
+                $arEmpleado = new \Empleado\FrontEndBundle\Entity\RhuEmpleado();
+                $arEmpleado = $em->getRepository('EmpleadoFrontEndBundle:RhuEmpleado')->findOneBy(array('numeroIdentificacion' => $form->get('numeroIdentificacion')->getData()));
+                if(count($arEmpleado) > 0) {
+                    $arUsuario->setUsername($form->get('numeroIdentificacion')->getData());
+                    if ($form->get('password')->getData() != ""){
+                        $arUsuario->setPassword(password_hash($form->get('password')->getData(), PASSWORD_BCRYPT));
+                    }else {
+                        $arUsuario->setPassword($arUsuario->getPassword());
+                    }
+                    $em->persist($arUsuario);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
+                }else {
+                    echo "<br /><br /><br /><br />No existe el empleado";
+                }                
+            } else {
+                echo "<br /><br /><br /><br />Este usuario no existe";
+            }            
+        }
+        return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:editar.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
     
     private function listar() {
         $em = $this->getDoctrine()->getManager();                        

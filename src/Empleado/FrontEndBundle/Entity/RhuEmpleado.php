@@ -284,12 +284,26 @@ class RhuEmpleado
      * @ORM\JoinColumn(name="codigo_cargo_fk", referencedColumnName="codigo_cargo_pk")
      */
     protected $cargoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuDisciplinario", mappedBy="empleadoRel")
+     */
+    protected $disciplinariosEmpleadoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuIncapacidad", mappedBy="empleadoRel")
+     */
+    protected $incapacidadesEmpleadoRel;
+    
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->pagosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disciplinariosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->incapacidadesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1483,5 +1497,71 @@ class RhuEmpleado
     public function getCargoRel()
     {
         return $this->cargoRel;
+    }
+
+    /**
+     * Add disciplinariosEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosEmpleadoRel
+     * @return RhuEmpleado
+     */
+    public function addDisciplinariosEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosEmpleadoRel)
+    {
+        $this->disciplinariosEmpleadoRel[] = $disciplinariosEmpleadoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove disciplinariosEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosEmpleadoRel
+     */
+    public function removeDisciplinariosEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosEmpleadoRel)
+    {
+        $this->disciplinariosEmpleadoRel->removeElement($disciplinariosEmpleadoRel);
+    }
+
+    /**
+     * Get disciplinariosEmpleadoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDisciplinariosEmpleadoRel()
+    {
+        return $this->disciplinariosEmpleadoRel;
+    }
+
+    /**
+     * Add incapacidadesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEmpleadoRel
+     * @return RhuEmpleado
+     */
+    public function addIncapacidadesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEmpleadoRel)
+    {
+        $this->incapacidadesEmpleadoRel[] = $incapacidadesEmpleadoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove incapacidadesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEmpleadoRel
+     */
+    public function removeIncapacidadesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEmpleadoRel)
+    {
+        $this->incapacidadesEmpleadoRel->removeElement($incapacidadesEmpleadoRel);
+    }
+
+    /**
+     * Get incapacidadesEmpleadoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncapacidadesEmpleadoRel()
+    {
+        return $this->incapacidadesEmpleadoRel;
     }
 }

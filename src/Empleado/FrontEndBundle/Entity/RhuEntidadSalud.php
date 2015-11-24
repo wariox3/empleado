@@ -45,7 +45,12 @@ class RhuEntidadSalud
     /**
      * @ORM\OneToMany(targetEntity="RhuEmpleado", mappedBy="entidadSaludRel")
      */
-    protected $empleadosEntidadSaludRel;    
+    protected $empleadosEntidadSaludRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuIncapacidad", mappedBy="entidadSaludRel")
+     */
+    protected $incapacidadesEntidadSaludRel;
 
     
     /**
@@ -54,6 +59,7 @@ class RhuEntidadSalud
     public function __construct()
     {
         $this->empleadosEntidadSaludRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->incapacidadesEntidadSaludRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -212,5 +218,38 @@ class RhuEntidadSalud
     public function getEmpleadosEntidadSaludRel()
     {
         return $this->empleadosEntidadSaludRel;
+    }
+
+    /**
+     * Add incapacidadesEntidadSaludRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEntidadSaludRel
+     * @return RhuEntidadSalud
+     */
+    public function addIncapacidadesEntidadSaludRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEntidadSaludRel)
+    {
+        $this->incapacidadesEntidadSaludRel[] = $incapacidadesEntidadSaludRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove incapacidadesEntidadSaludRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEntidadSaludRel
+     */
+    public function removeIncapacidadesEntidadSaludRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesEntidadSaludRel)
+    {
+        $this->incapacidadesEntidadSaludRel->removeElement($incapacidadesEntidadSaludRel);
+    }
+
+    /**
+     * Get incapacidadesEntidadSaludRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncapacidadesEntidadSaludRel()
+    {
+        return $this->incapacidadesEntidadSaludRel;
     }
 }

@@ -14,7 +14,7 @@ class ConsultaCartaLaboralController extends Controller
         $request = $this->getRequest();  
         $form = $this->formularioLista();
         $form->handleRequest($request);        
-        $this->listar();         
+        $this->listar($form);         
         if($form->isValid()) {
             if($request->request->get('OpImprimir')) {
                 $codigoContrato = $request->request->get('OpImprimir');
@@ -36,13 +36,13 @@ class ConsultaCartaLaboralController extends Controller
             ));
     }   
     
-    private function listar() {
+    private function listar($form) {
         $em = $this->getDoctrine()->getManager();  
         $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();
         $arUsuario = $this->get('security.context')->getToken()->getUser();        
         $this->strDqlLista = $em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->listaDql(
                 $arUsuario->getCodigoEmpleadoFk(),    
-                ""                
+                $form->get('TxtCodigoContrato')->getData()                
         );  
     }
     

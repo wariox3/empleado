@@ -19,12 +19,12 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('emp_usuario_consulta_carta_laboral') }}">Cartas laborales</a></li>
                         <li><a href="{{ path('emp_usuario_consulta_pago') }}">Pagos</a></li>
-                        <li><a href="#">Procesos disciplinarios</a></li>
-                        <li><a href="#">Incapacidades</a></li>
-                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('emp_usuario_consulta_proceso_disciplinario') }}">Procesos disciplinarios</a></li>
+                        <li><a href="{{ path('emp_usuario_consulta_incapacidad') }}">Incapacidades</a></li>
+                        <!--<li role="separator" class="divider"></li>
                         <li class="dropdown-header">Adicionales</li>
                         <li><a href="#">Historico contratos</a></li>
-                        <li><a href="#">Documentos digitalizados</a></li>
+                        <li><a href="#">Documentos digitalizados</a></li>-->
                     </ul>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}

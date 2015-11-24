@@ -114,15 +114,24 @@ class RhuCentroCosto
      * @ORM\JoinColumn(name="codigo_periodo_pago_fk", referencedColumnName="codigo_periodo_pago_pk")
      */
     protected $periodoPagoRel;
-
     
+    /**
+     * @ORM\OneToMany(targetEntity="RhuDisciplinario", mappedBy="centroCostoRel")
+     */
+    protected $disciplinariosCentroCostoRel;
     
+    /**
+     * @ORM\OneToMany(targetEntity="RhuIncapacidad", mappedBy="centroCostoRel")
+     */
+    protected $incapacidadesCentroCostoRel;
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->pagosCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->disciplinariosCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->incapacidadesCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -580,5 +589,71 @@ class RhuCentroCosto
     public function getPeriodoPagoRel()
     {
         return $this->periodoPagoRel;
+    }
+
+    /**
+     * Add disciplinariosCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosCentroCostoRel
+     * @return RhuCentroCosto
+     */
+    public function addDisciplinariosCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosCentroCostoRel)
+    {
+        $this->disciplinariosCentroCostoRel[] = $disciplinariosCentroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove disciplinariosCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosCentroCostoRel
+     */
+    public function removeDisciplinariosCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosCentroCostoRel)
+    {
+        $this->disciplinariosCentroCostoRel->removeElement($disciplinariosCentroCostoRel);
+    }
+
+    /**
+     * Get disciplinariosCentroCostoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDisciplinariosCentroCostoRel()
+    {
+        return $this->disciplinariosCentroCostoRel;
+    }
+
+    /**
+     * Add incapacidadesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesCentroCostoRel
+     * @return RhuCentroCosto
+     */
+    public function addIncapacidadesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesCentroCostoRel)
+    {
+        $this->incapacidadesCentroCostoRel[] = $incapacidadesCentroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove incapacidadesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesCentroCostoRel
+     */
+    public function removeIncapacidadesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuIncapacidad $incapacidadesCentroCostoRel)
+    {
+        $this->incapacidadesCentroCostoRel->removeElement($incapacidadesCentroCostoRel);
+    }
+
+    /**
+     * Get incapacidadesCentroCostoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncapacidadesCentroCostoRel()
+    {
+        return $this->incapacidadesCentroCostoRel;
     }
 }
