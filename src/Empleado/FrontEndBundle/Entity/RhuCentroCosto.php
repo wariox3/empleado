@@ -124,6 +124,20 @@ class RhuCentroCosto
      * @ORM\OneToMany(targetEntity="RhuIncapacidad", mappedBy="centroCostoRel")
      */
     protected $incapacidadesCentroCostoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuVacacion", mappedBy="centroCostoRel")
+     */
+    protected $vacacionesCentroCostoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="centroCostoRel")
+     */
+    protected $liquidacionesCentroCostoRel;
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -132,6 +146,8 @@ class RhuCentroCosto
         $this->pagosCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->disciplinariosCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incapacidadesCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vacacionesCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidacionesCentroCostoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -655,5 +671,71 @@ class RhuCentroCosto
     public function getIncapacidadesCentroCostoRel()
     {
         return $this->incapacidadesCentroCostoRel;
+    }
+
+    /**
+     * Add vacacionesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesCentroCostoRel
+     * @return RhuCentroCosto
+     */
+    public function addVacacionesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesCentroCostoRel)
+    {
+        $this->vacacionesCentroCostoRel[] = $vacacionesCentroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacacionesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesCentroCostoRel
+     */
+    public function removeVacacionesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesCentroCostoRel)
+    {
+        $this->vacacionesCentroCostoRel->removeElement($vacacionesCentroCostoRel);
+    }
+
+    /**
+     * Get vacacionesCentroCostoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVacacionesCentroCostoRel()
+    {
+        return $this->vacacionesCentroCostoRel;
+    }
+
+    /**
+     * Add liquidacionesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesCentroCostoRel
+     * @return RhuCentroCosto
+     */
+    public function addLiquidacionesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesCentroCostoRel)
+    {
+        $this->liquidacionesCentroCostoRel[] = $liquidacionesCentroCostoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacionesCentroCostoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesCentroCostoRel
+     */
+    public function removeLiquidacionesCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesCentroCostoRel)
+    {
+        $this->liquidacionesCentroCostoRel->removeElement($liquidacionesCentroCostoRel);
+    }
+
+    /**
+     * Get liquidacionesCentroCostoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLiquidacionesCentroCostoRel()
+    {
+        return $this->liquidacionesCentroCostoRel;
     }
 }

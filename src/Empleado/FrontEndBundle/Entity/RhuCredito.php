@@ -131,7 +131,13 @@ class RhuCredito
      * @ORM\JoinColumn(name="codigo_credito_tipo_pago_fk", referencedColumnName="codigo_credito_tipo_pago_pk")
      */
     protected $creditoTipoPagoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuLiquidacionAdicionales", mappedBy="creditoRel")
+     */
+    protected $liquidacionesAdicionalesCreditoRel;
 
+    
     
     
     /**
@@ -141,6 +147,7 @@ class RhuCredito
     {
         $this->creditosPagosCreditoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pagosDetallesCreditoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidacionesAdicionalesCreditoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -677,5 +684,38 @@ class RhuCredito
     public function getCreditoTipoPagoRel()
     {
         return $this->creditoTipoPagoRel;
+    }
+
+    /**
+     * Add liquidacionesAdicionalesCreditoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacionAdicionales $liquidacionesAdicionalesCreditoRel
+     * @return RhuCredito
+     */
+    public function addLiquidacionesAdicionalesCreditoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacionAdicionales $liquidacionesAdicionalesCreditoRel)
+    {
+        $this->liquidacionesAdicionalesCreditoRel[] = $liquidacionesAdicionalesCreditoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacionesAdicionalesCreditoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacionAdicionales $liquidacionesAdicionalesCreditoRel
+     */
+    public function removeLiquidacionesAdicionalesCreditoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacionAdicionales $liquidacionesAdicionalesCreditoRel)
+    {
+        $this->liquidacionesAdicionalesCreditoRel->removeElement($liquidacionesAdicionalesCreditoRel);
+    }
+
+    /**
+     * Get liquidacionesAdicionalesCreditoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLiquidacionesAdicionalesCreditoRel()
+    {
+        return $this->liquidacionesAdicionalesCreditoRel;
     }
 }

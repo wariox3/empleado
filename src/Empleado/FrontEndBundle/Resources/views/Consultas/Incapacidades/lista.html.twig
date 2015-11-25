@@ -29,7 +29,7 @@
                         <th>NÚMERO EPS</th>
                         <th>EPS</th>
                         <th>IDENTIFICACIÓN</th>
-                        <th>EMPLEADO</th>                                                
+                        <th>EMPLEADO</th>
                         <th>CENTRO COSTO</th>
                         <th>DESDE</th>
                         <th>HASTA</th>
@@ -37,6 +37,7 @@
                         <th>COBRAR</th>
                         <th>PRORROGA</th>
                         <th>TRANSCRIPCIÓN</th>
+                        <th style="text-align: right">VR INCAPACIDAD</th>
                     </tr>
                     {% for arIncapacidades in arIncapacidades %}
                     <tr>
@@ -48,11 +49,12 @@
                         <td>{{ arIncapacidades.empleadoRel.nombreCorto  }}</td>
                         <td>{{ arIncapacidades.centroCostoRel.nombre |default('')  }}</td>
                         <td>{{ arIncapacidades.fechaDesde |date("Y/m/d")  }}</td>
-                        <td>{{ arIncapacidades.fechaHasta |date("Y/m/d")  }}</td>                                                
-                        <td style="text-align: right">{{ arIncapacidades.cantidad | number_format(0, '.', ',') }}</td>                                            
+                        <td>{{ arIncapacidades.fechaHasta |date("Y/m/d")  }}</td>
+                        <td style="text-align: right">{{ arIncapacidades.cantidad | number_format(0, '.', ',') }}</td>
                         <td>{% if arIncapacidades.estadoCobrar == 1 %} SI {% else %} NO {% endif %}</td>
                         <td>{% if arIncapacidades.estadoProrroga == 1 %} SI {% else %} NO {% endif %}</td>
                         <td>{% if arIncapacidades.estadoTranscripcion == 1 %} SI {% else %} NO {% endif %}</td>
+                        <td style="text-align: right">$ {{ arIncapacidades.vrIncapacidad | number_format(0, '.', ',') }}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -63,13 +65,13 @@
             <div class="btn-group">
                 <div class="btn btn-default btn-sm">Incapacidades <span class="badge">{{ arIncapacidades.getTotalItemCount }}</span></div>
             </div>
-            <div class="btn-toolbar" style="float: right">                 
-            <div class="btn-group">                
-                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            <div class="btn-toolbar" style="float: right">
+            <div class="btn-group">
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}
             </div>
         </div>
         </div>
-        
+
 
         {{ form_rest(form) }}
     {{ form_end(form) }}

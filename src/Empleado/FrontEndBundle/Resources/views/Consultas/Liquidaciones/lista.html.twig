@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h3>Lista liquidaciones</h3>
+    </div>
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+            {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Filtros de busqueda</div>
+            <div class="panel-body">          
+                <div class="form-group form-group-sm">  
+                    <label for="form_TxtCodigoLiquidacion" class="col-sm-2 control-label">Código liquidación:</label>
+                    <div class="col-sm-10">                  
+                        {{ form_widget(form.TxtCodigoLiquidacion, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                                                             
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnFiltrar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>                                                    
+            </div>
+        </div> 
+        <table  class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th>CÓDIGO</th>
+                <th>IDENTIFICACIÓN</th>
+                <th>EMPLEADO</th>
+                <th>CENTRO COSTO</th>
+                <th>CONTRATO</th>
+                <th>MOTIVO TERMINACIÓN</th>
+                <th>FECHA DESDE</th>
+                <th>FECHA HASTA</th>                                                                        
+                <th>GENERADO</th>
+                <th align="right">VR TOTAL LIQUIDADO</th>
+                <th></th>
+            </tr>
+            {% for arLiquidaciones in arLiquidaciones %}
+            <tr>
+                <td><input type="hidden" name="LblCodigo[]" value="{{ arLiquidaciones.codigoLiquidacionPk }}">{{ arLiquidaciones.codigoLiquidacionPk }} </td>
+                <td>{{ arLiquidaciones.empleadoRel.numeroIdentificacion|default('SIN EMPLEADO')  }}</td>                            
+                <td>{{ arLiquidaciones.empleadoRel.nombreCorto|default('SIN EMPLEADO')  }}</td>
+                <td>{{ arLiquidaciones.centroCostoRel.nombre|default('SIN EMPLEADO')  }}</td>
+                <td>{{ arLiquidaciones.codigoContratoFk  }}</td>
+                <td>{{ arLiquidaciones.motivoTerminacionRel.motivo|default('SIN EMPLEADO')  }}</td>
+                <td>{{ arLiquidaciones.fechaDesde |date("Y/m/d")  }}</td>
+                <td>{{ arLiquidaciones.fechaHasta |date("Y/m/d")  }}</td>
+                <td>{%if arLiquidaciones.estadoGenerado == 1%} SI {%else%} NO {%endif%}</td>
+                <td align="right">$ {{ arLiquidaciones.vrTotal | number_format(0, '.', ',') }}</td>
+                <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arLiquidaciones.codigoLiquidacionPk }}">Imprimir</button></td>                
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="btn-toolbar" style="float: left">
+            <div class="btn-group">
+                {{ knp_pagination_render(arLiquidaciones) }} 
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-default btn-sm">Liquidaciones <span class="badge">{{ arLiquidaciones.getTotalItemCount }}</span></div>        
+            </div>
+        </div>                
+        <div class="btn-toolbar" style="float: right">                 
+            <div class="btn-group">                
+                {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
+            </div>
+        </div>
+        
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

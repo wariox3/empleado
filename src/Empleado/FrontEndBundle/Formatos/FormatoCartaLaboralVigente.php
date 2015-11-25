@@ -28,13 +28,13 @@ class FormatoCartaLaboralVigente extends \FPDF_FPDF {
         $this->Line(10, 50, 60, 50);
         $this->Cell(0, 0, $this->Image('imagenes/logos/logo.jpg' , 15 ,20, 40 , 20,'JPG'), 0, 0, 'C', 0); //cuadro para el logo
         $this->SetXY(60, 10);
-        $this->Cell(90, 10, utf8_decode("PROCESO GESTIÓN HUMANA"), 1, 0, 'C', 1); //cuardo mitad arriba
+        $this->Cell(90, 10, utf8_decode(""), 1, 0, 'C', 1); //cuardo mitad arriba
         $this->SetXY(60, 20);
         $this->SetFillColor(236, 236, 236);
-        $this->Cell(90, 20, utf8_decode("PROCESOS DE RÉGIMEN DISCIPLINARIO"), 1, 0, 'C', 1); //cuardo mitad medio
+        $this->Cell(90, 20, utf8_decode("PROCESO CONTRATACIÓN"), 1, 0, 'C', 1); //cuardo mitad medio
         $this->SetFillColor(272, 272, 272);
         $this->SetXY(60, 40);
-        $this->Cell(90, 10, utf8_decode("Régimen Organizacional Interno "), 1, 0, 'C', 1); //cuardo mitad abajo
+        $this->Cell(90, 10, utf8_decode(" "), 1, 0, 'C', 1); //cuardo mitad abajo
         $this->SetXY(150, 10);
         $this->Cell(50, 10, utf8_decode('Página ') . $this->PageNo() . ' de {nb}', 1, 0, 'C', 1); //cuadro derecho arriba
         $this->SetXY(150, 20);
@@ -54,6 +54,7 @@ class FormatoCartaLaboralVigente extends \FPDF_FPDF {
         $this->Text(80, 70, utf8_decode("DEPTARTAMENTO NÓMINA"));
         $this->Text(98, 90, utf8_decode("CERTIFICA"));
         $this->Ln(35);
+        $this->Cell(0, 0, $this->Image('imagenes/logos/firmanomina.jpg' , 15 ,150, 40 , 20,'JPG'), 0, 0, 'C', 0); //cuadro para el logo
     }
 
     public function Body($pdf) {
@@ -114,12 +115,16 @@ class FormatoCartaLaboralVigente extends \FPDF_FPDF {
         $cadenaCambiada = preg_replace($patron13, $sustitucion13, $cadenaCambiada);
         $pdf->MultiCell(0,5, $cadenaCambiada);
         
+        
     }
 
     public function Footer() {
-        
-        $this->SetFont('Arial', 'B', '10');
-        $this->Text(170, 290, utf8_decode('Página ') . $this->PageNo() . ' de {nb}');
+        $arConfiguracion = new \Empleado\FrontEndBundle\Entity\GenConfiguracion();
+        $arConfiguracion = self::$em->getRepository('EmpleadoFrontEndBundle:GenConfiguracion')->find(1);
+        $this->SetFont('Arial', '', '9');
+        $this->Text(10, 285, '____________________________________________________________________________________________________________');
+        $this->Text(20,290, utf8_decode($arConfiguracion->getNombreEmpresa()." - ".$arConfiguracion->getDireccionEmpresa()." - Teléfono ".$arConfiguracion->getTelefonoEmpresa()." - ".$arConfiguracion->getPaginaWeb() ));
+        $this->Text(180, 284, utf8_decode('Página ') . $this->PageNo() . ' de {nb}');
     }    
 }
 
