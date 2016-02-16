@@ -45,8 +45,8 @@ class User implements UserInterface, \Serializable
     private $codigoEmpleadoFk;  
     
     /**
-     * @ORM\Column(type="string", length=250)
-     */
+     * @ORM\Column(name="roles", type="string", length=250, nullable=true)
+     */    
     private $roles;    
 
     /**

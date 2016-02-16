@@ -45,7 +45,7 @@ class UsuarioController extends Controller
                     $arUsuario->setIsActive(1);
                     $arUsuario->setCodigoEmpleadoFk($arEmpleado->getCodigoEmpleadoPk());
                     $arUsuario->setNombre($arEmpleado->getNombreCorto());
-                    $arUsuario->setRoles('ROLE_USER');
+                    $arUsuario->setRoles($arUsuario->getRoles());
                     $arUsuario->setPassword(password_hash($arUsuario->getPassword(), PASSWORD_BCRYPT));                    
                     $em->flush();
                     return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
@@ -67,8 +67,13 @@ class UsuarioController extends Controller
         $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();      
         
         $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
-        
+        if ($arUsuario->getRoles() == "ROLE_ADMIN"){
+            $rol = "ADMINISTRADOR";
+        } else {
+            $rol = "USUARIO";
+        }
         $form = $this->createFormBuilder()
+            ->add('roles', 'choice', array('choices' => array($arUsuario->getRoles() => $rol ,'ROLE_ADMIN' => 'ADMINISTRADOR', 'ROLE_USER' => 'USUARIO')))
             ->add('numeroIdentificacion', 'text', array('data' => $arUsuario->getNumeroIdentificacion(), 'required' => true))
             ->add('password', 'password', array('data' => '', 'required' => false))                
             ->add('guardar', 'submit', array('label' => 'Guardar'))            
@@ -89,6 +94,7 @@ class UsuarioController extends Controller
                     }else {
                         $arUsuario->setPassword($arUsuario->getPassword());
                     }
+                    $arUsuario->setRoles($form->get('roles')->getData());
                     $em->persist($arUsuario);
                     $em->flush();
                     return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
@@ -106,7 +112,7 @@ class UsuarioController extends Controller
     
     private function listar() {
         $em = $this->getDoctrine()->getManager();                        
-        $this->strDqlLista = $em->getRepository('EmpleadoFrontEndBundle:User')->listaDql();  
+        $this->strDqlLista = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->listaDql();  
     }
     
     private function formularioLista() {
