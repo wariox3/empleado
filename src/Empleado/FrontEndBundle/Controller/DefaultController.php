@@ -8,12 +8,13 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $message = \Swift_Message::newInstance()
+        /*$message = \Swift_Message::newInstance()
                 ->setSubject('Hello Email')
                 ->setFrom('maestradaz3@gmail.com')
                 ->setTo('maestradaz3@gmail.com')
                 ->setBody('Hola mundo', 'text/html');
-        $this->get('mailer')->send($message);  
+        $this->get('mailer')->send($message);  */
+        
         return $this->render('EmpleadoFrontEndBundle:Default:index.html.twig');
     }
     

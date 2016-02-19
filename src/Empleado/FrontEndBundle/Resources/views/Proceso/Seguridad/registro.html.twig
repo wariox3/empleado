@@ -1,7 +1,7 @@
 
 {% block stylesheets %}            
-<link href="{{ asset('bundles/soga/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-<link href="{{ asset('bundles/soga/css/signin.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('bootstrap-3.3.5-dist/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('css/signin.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}                 
 
 <!DOCTYPE html>
@@ -24,8 +24,21 @@
                 <br/>       
                 {{ form_widget(form.BtnRegistrar, { 'attr': {'class': 'btn btn-lg btn-primary btn-block'} }) }}                                         
                 <a class="btn btn-lg btn-default btn-block" href="{{ path('login') }}">Inicio sesion</a> 
-                <center>                   
+                <center><br/>        
+                    
             {{ form_end(form) }}
+            {% for flashMessage in app.session.flashbag.get('suceso') %}
+                <div id="error" class="alert alert-success fade in" >
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <p>{{ flashMessage }}</p>
+                 </div> 
+            {% endfor %} 
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div id="error" class="alert alert-danger fade in" >
+                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     <p>{{ flashMessage }}</p>
+                 </div> 
+            {% endfor %}            
         </div>
     </body>
 </html>

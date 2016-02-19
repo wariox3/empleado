@@ -44,6 +44,6 @@ monolog:
 assetic:
     use_controller: true
           
-#swiftmailer:   
+swiftmailer:   
 #    disable_delivery:  true
-#    delivery_address: maestradaz3@gmail.com
+    delivery_address: maestradaz3@gmail.com

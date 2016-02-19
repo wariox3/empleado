@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h3>Cambiar clave</h3>
+        </div>
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'} }) }}
+        {{ form_errors(form) }}
+        <div class="panel panel-default">
+            <div class="panel-heading">Parametros de cambio de clave</div>
+            <div class="panel-body">
+                <div class="form-group form-group-sm">
+                    <label for="form_claveNueva" class="col-sm-2 control-label">Clave nueva:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.claveNueva, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div> 
+                <div class="form-group form-group-sm">
+                    <label for="form_claveNueva2" class="col-sm-2 control-label">Repita clave nueva:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.claveNueva2, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>                    
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {{ form_widget(form.BtnCambiar, { 'attr': {'class': 'btn btn-default btn-sm', 'style':'float:right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

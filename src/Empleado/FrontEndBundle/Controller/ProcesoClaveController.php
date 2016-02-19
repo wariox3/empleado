@@ -5,48 +5,78 @@ namespace Empleado\FrontEndBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Empleado\FrontEndBundle\Form\Type\UserType;
 use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
-class ProcesoRegistroController extends Controller
+class ProcesoClaveController extends Controller
 {  
     
-    public function nuevoAction() {
+    public function cambiarAction() {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        
+        $form = $this->createFormBuilder()                                              
+          ->add('claveNueva', 'text', array('label'  => 'Numero','data' => "", 'required' => true))                                                                                           
+          ->add('claveNueva2', 'text', array('label'  => 'Numero','data' => "", 'required' => true))                                                                           
+          ->add('BtnCambiar', 'submit', array('label'  => 'Cambiar clave'))                                            
+          ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) { 
+            if($form->get('BtnCambiar')->isClicked()) {                
+                $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();
+                $arUsuario = $this->get('security.context')->getToken()->getUser();                                 
+                $strClaveNueva = $form->get('claveNueva')->getData();
+                $strClaveNueva2 = $form->get('claveNueva2')->getData();                
+                if($strClaveNueva == $strClaveNueva2) {
+                    $strClave = password_hash($strClaveNueva, PASSWORD_BCRYPT);
+                    $arUsuarioActualizar = new \Empleado\FrontEndBundle\Entity\Usuario();
+                    $arUsuarioActualizar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuario->getId());
+                    $arUsuarioActualizar->setPassword($strClave);
+                    $em->persist($arUsuarioActualizar);
+                    $em->flush();    
+                    $this->get('session')->getFlashBag()->add("informacion", "La clave se ha cambiado exitosamente");                                                
+                } else {
+                    $this->get('session')->getFlashBag()->add("error", "Las claves deben coincidir");                                                
+                }
+                //return $this->redirect($this->generateUrl('emp_cambiar_clave'));
+            }          
+        }
+        return $this->render('EmpleadoFrontEndBundle:Proceso/Seguridad:cambiarClave.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    } 
+    
+    public function recuperarAction() {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         
         $form = $this->createFormBuilder()                                    
           ->add('numeroIdentificacion', 'text', array('label'  => 'Numero','data' => "", 'required' => true))                                                                           
-          ->add('BtnRegistrar', 'submit', array('label'  => 'Registrarse'))                                            
+          ->add('BtnRecuperar', 'submit', array('label'  => 'Recuperar clave'))                                            
           ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) { 
-            if($form->get('BtnRegistrar')->isClicked()) {
+            if($form->get('BtnRecuperar')->isClicked()) {
                 $numeroIdentificacion = $form->get('numeroIdentificacion')->getData();
                 $arEmpleado = new \Empleado\FrontEndBundle\Entity\RhuEmpleado();
                 $arEmpleado = $em->getRepository('EmpleadoFrontEndBundle:RhuEmpleado')->findOneBy(array('numeroIdentificacion' => $numeroIdentificacion));            
                 if($arEmpleado) {
                     $arUsuarioValidar = new \Empleado\FrontEndBundle\Entity\Usuario();             
                     $arUsuarioValidar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $numeroIdentificacion));                
-                    if(!$arUsuarioValidar) {
+                    if($arUsuarioValidar) {
                         if($arEmpleado->getCorreo()) {
                             $arConfiguracion = new \Empleado\FrontEndBundle\Entity\GenConfiguracion();
                             $arConfiguracion = $em->getRepository('EmpleadoFrontEndBundle:GenConfiguracion')->find(1);
-                            $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();
-                            $arUsuario->setUsername($arEmpleado->getNumeroIdentificacion());
-                            $arUsuario->setEmail($arEmpleado->getCorreo());
-                            $arUsuario->setIsActive(1);
-                            $arUsuario->setCodigoEmpleadoFk($arEmpleado->getCodigoEmpleadoPk());
-                            $arUsuario->setNombre($arEmpleado->getNombreCorto());
-                            $arUsuario->setRoles('ROLE_USER');
+                            $arUsuarioAct = new \Empleado\FrontEndBundle\Entity\Usuario();
+                            $arUsuarioAct = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuarioValidar->getId());                            
                             $psswd = substr( md5(microtime()), 1, 8);
-                            $arUsuario->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
-                            $em->persist($arUsuario);
+                            $arUsuarioAct->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
+                            $em->persist($arUsuarioAct);
                             $em->flush();
-                            $strMensaje = "Se ha registrado con exito en la aplicacion para empleados de sogaApp <br />";
+                            $strMensaje = "Se ha cambiado la clave con exito en la aplicacion para empleados de sogaApp <br />";
                                         $strMensaje .= "<table border='2'>";
                                         $strMensaje .= "<tr>";
                                         $strMensaje .= "<th>CODIGO</th>";
                                         $strMensaje .= "<th>IDENTIFICACION</th>";
                                         $strMensaje .= "<th>NOMBRE</th>";
-                                        $strMensaje .= "<th>CLAVE</th>";
+                                        $strMensaje .= "<th>CLAVE NUEVA</th>";
                                         $strMensaje .= "</tr>";
 
                                         $strMensaje .= "<tr>";
@@ -65,7 +95,7 @@ class ProcesoRegistroController extends Controller
                                 ->setTo(strtolower($arEmpleado->getCorreo()))
                                 ->setBody($strMensaje,'text/html');
                             $this->get('mailer')->send($message); 
-                            $this->get('session')->getFlashBag()->add("suceso", "Usuario creado con exito, verifique su correo electronico " . strtolower($arEmpleado->getCorreo()) . " y vuelva a inicio de sesion");                            
+                            $this->get('session')->getFlashBag()->add("suceso", "Clave cambiada con exito, verifique su correo electronico " . strtolower($arEmpleado->getCorreo()) . " y vuelva a inicio de sesion");                            
                                                 
 
                             /*$transport = \Swift_SmtpTransport::newInstance('mail.jgefectivo.com', 25)
@@ -85,7 +115,7 @@ class ProcesoRegistroController extends Controller
                             $this->get('session')->getFlashBag()->add("error", "Este empleado no registra correo electronico por favor comuniquese con la empresa");                            
                         }                       
                     } else {
-                        $this->get('session')->getFlashBag()->add("error", "El usuario ya esta registrado en el sistema, si no recuerda presione el boton recuperar clave");                            
+                        $this->get('session')->getFlashBag()->add("error", "No es posible recuperar la clave porque el empleado aun no esta registrado");                            
                     }
                 } else {
                     $this->get('session')->getFlashBag()->add("error", "El empleado con este numero de identificacion no existe");                                                
@@ -118,8 +148,8 @@ class ProcesoRegistroController extends Controller
              * 
              */           
         }
-        return $this->render('EmpleadoFrontEndBundle:Proceso/Seguridad:registro.html.twig', array(
+        return $this->render('EmpleadoFrontEndBundle:Proceso/Seguridad:recuperarClave.html.twig', array(
             'form' => $form->createView(),
         ));
-    }              
+    }     
 }

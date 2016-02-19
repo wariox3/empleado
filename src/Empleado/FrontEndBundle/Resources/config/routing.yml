@@ -15,6 +15,10 @@ login_check:
 registro:
     pattern:   /registro
     defaults:  { _controller: EmpleadoFrontEndBundle:ProcesoRegistro:nuevo }
+
+recuperar_clave:
+    pattern:   /recuperar/clave
+    defaults:  { _controller: EmpleadoFrontEndBundle:ProcesoRegistro:nuevo }
     
 emp_usuario_consulta_carta_laboral:
     path:     /usuario/consulta/carta/laboral
@@ -50,4 +54,12 @@ emp_usuario_consulta_vacacion:
     
 emp_usuario_consulta_prestacion_final:
     path:     /usuario/consulta/prestaciones/finales
-    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPrestaciones:lista }    
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPrestaciones:lista }   
+    
+emp_proceso_clave_cambiar:
+    path:     /proceso/clave/cambiar
+    defaults: { _controller: EmpleadoFrontEndBundle:ProcesoClave:cambiar }    
+
+emp_proceso_clave_recuperar:
+    path:     /proceso/clave/recuperar
+    defaults: { _controller: EmpleadoFrontEndBundle:ProcesoClave:recuperar } 
