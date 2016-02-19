@@ -1,0 +1,31 @@
+
+{% block stylesheets %}            
+<link href="{{ asset('bundles/soga/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ asset('bundles/soga/css/signin.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}                 
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Registro!</title>
+    </head>
+    <body>
+        <div class="container">
+            {{ form_start(form, { 'attr': {'class': 'form-signin'} }) }}
+            
+                <h2 class="form-signin-heading">Registro</h2>                
+                {{ form_widget(form.numeroIdentificacion, { 'attr': {'class': 'form-control','autofocus':'autofocus', 'placeholder':'Documento identificacion'} }) }}
+                <br/>       
+                {{ form_widget(form.BtnRegistrar, { 'attr': {'class': 'btn btn-lg btn-primary btn-block'} }) }}                                         
+                <a class="btn btn-lg btn-default btn-block" href="{{ path('login') }}">Inicio sesion</a> 
+                <center>                   
+            {{ form_end(form) }}
+        </div>
+    </body>
+</html>
