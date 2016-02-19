@@ -24,7 +24,7 @@ class ConsultaPagoController extends Controller
             if($form->isValid()) {
             if($form->get('BtnExcel')->isClicked()) {
                 //$this->filtrarLista($form);
-                $this->listar();
+                $this->listar($form);
                 $this->generarExcel();
             }
         }

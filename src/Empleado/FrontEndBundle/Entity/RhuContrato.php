@@ -193,12 +193,26 @@ class RhuContrato
      * @ORM\JoinColumn(name="codigo_tipo_tiempo_fk", referencedColumnName="codigo_tipo_tiempo_pk")
      */
     protected $tipoTiempoRel;   
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuVacacion", mappedBy="contratoRel")
+     */
+    protected $vacacionesContratoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="liquidacionRel")
+     */
+    protected $liquidacionesAdicionalesLiquidacionRel;
+    
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->contratosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vacacionesContratoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidacionesAdicionalesLiquidacionRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1001,5 +1015,71 @@ class RhuContrato
     public function getTipoTiempoRel()
     {
         return $this->tipoTiempoRel;
+    }
+
+    /**
+     * Add vacacionesContratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesContratoRel
+     * @return RhuContrato
+     */
+    public function addVacacionesContratoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesContratoRel)
+    {
+        $this->vacacionesContratoRel[] = $vacacionesContratoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacacionesContratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesContratoRel
+     */
+    public function removeVacacionesContratoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesContratoRel)
+    {
+        $this->vacacionesContratoRel->removeElement($vacacionesContratoRel);
+    }
+
+    /**
+     * Get vacacionesContratoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVacacionesContratoRel()
+    {
+        return $this->vacacionesContratoRel;
+    }
+
+    /**
+     * Add liquidacionesAdicionalesLiquidacionRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel
+     * @return RhuContrato
+     */
+    public function addLiquidacionesAdicionalesLiquidacionRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel)
+    {
+        $this->liquidacionesAdicionalesLiquidacionRel[] = $liquidacionesAdicionalesLiquidacionRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacionesAdicionalesLiquidacionRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel
+     */
+    public function removeLiquidacionesAdicionalesLiquidacionRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel)
+    {
+        $this->liquidacionesAdicionalesLiquidacionRel->removeElement($liquidacionesAdicionalesLiquidacionRel);
+    }
+
+    /**
+     * Get liquidacionesAdicionalesLiquidacionRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLiquidacionesAdicionalesLiquidacionRel()
+    {
+        return $this->liquidacionesAdicionalesLiquidacionRel;
     }
 }

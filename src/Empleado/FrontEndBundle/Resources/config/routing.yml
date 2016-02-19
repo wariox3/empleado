@@ -42,4 +42,12 @@ emp_admin_usuario_nuevo:
     
 emp_admin_usuario_editar:
     path:     /admin/usuario/editar/{codigoUsuario}
-    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:editar }    
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:editar } 
+    
+emp_usuario_consulta_vacacion:
+    path:     /usuario/consulta/vacaciones
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaVacaciones:lista }     
+    
+emp_usuario_consulta_prestacion_final:
+    path:     /usuario/consulta/prestaciones/finales
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPrestaciones:lista }    

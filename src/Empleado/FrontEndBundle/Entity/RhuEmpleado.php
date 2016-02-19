@@ -286,6 +286,12 @@ class RhuEmpleado
     protected $cargoRel;
     
     /**
+     * @ORM\ManyToOne(targetEntity="RhuBanco", inversedBy="empleadosBancoRel")
+     * @ORM\JoinColumn(name="codigo_banco_fk", referencedColumnName="codigo_banco_pk")
+     */
+    protected $bancoRel;
+    
+    /**
      * @ORM\OneToMany(targetEntity="RhuDisciplinario", mappedBy="empleadoRel")
      */
     protected $disciplinariosEmpleadoRel;
@@ -295,6 +301,15 @@ class RhuEmpleado
      */
     protected $incapacidadesEmpleadoRel;
     
+    /**
+     * @ORM\OneToMany(targetEntity="RhuVacacion", mappedBy="empleadoRel")
+     */
+    protected $vacacionesEmpleadoRel;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="empleadoRel")
+     */
+    protected $liquidacionesEmpleadoRel;
     
     /**
      * Constructor
@@ -304,6 +319,8 @@ class RhuEmpleado
         $this->pagosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->disciplinariosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->incapacidadesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vacacionesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidacionesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1500,6 +1517,29 @@ class RhuEmpleado
     }
 
     /**
+     * Set bancoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuBanco $bancoRel
+     * @return RhuEmpleado
+     */
+    public function setBancoRel(\Empleado\FrontEndBundle\Entity\RhuBanco $bancoRel = null)
+    {
+        $this->bancoRel = $bancoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get bancoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuBanco 
+     */
+    public function getBancoRel()
+    {
+        return $this->bancoRel;
+    }
+
+    /**
      * Add disciplinariosEmpleadoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosEmpleadoRel
@@ -1563,5 +1603,71 @@ class RhuEmpleado
     public function getIncapacidadesEmpleadoRel()
     {
         return $this->incapacidadesEmpleadoRel;
+    }
+
+    /**
+     * Add vacacionesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesEmpleadoRel
+     * @return RhuEmpleado
+     */
+    public function addVacacionesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesEmpleadoRel)
+    {
+        $this->vacacionesEmpleadoRel[] = $vacacionesEmpleadoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacacionesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesEmpleadoRel
+     */
+    public function removeVacacionesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuVacacion $vacacionesEmpleadoRel)
+    {
+        $this->vacacionesEmpleadoRel->removeElement($vacacionesEmpleadoRel);
+    }
+
+    /**
+     * Get vacacionesEmpleadoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVacacionesEmpleadoRel()
+    {
+        return $this->vacacionesEmpleadoRel;
+    }
+
+    /**
+     * Add liquidacionesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesEmpleadoRel
+     * @return RhuEmpleado
+     */
+    public function addLiquidacionesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesEmpleadoRel)
+    {
+        $this->liquidacionesEmpleadoRel[] = $liquidacionesEmpleadoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacionesEmpleadoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesEmpleadoRel
+     */
+    public function removeLiquidacionesEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesEmpleadoRel)
+    {
+        $this->liquidacionesEmpleadoRel->removeElement($liquidacionesEmpleadoRel);
+    }
+
+    /**
+     * Get liquidacionesEmpleadoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLiquidacionesEmpleadoRel()
+    {
+        return $this->liquidacionesEmpleadoRel;
     }
 }

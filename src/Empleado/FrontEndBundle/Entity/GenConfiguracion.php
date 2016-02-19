@@ -91,8 +91,14 @@ class GenConfiguracion
     /**
      * @ORM\Column(name="direccion_empresa", type="string", length=120, nullable=true)
      */    
-    private $direccionEmpresa;    
+    private $direccionEmpresa;  
+    
+    /**
+     * @ORM\Column(name="pagina_web", type="string", length=100, nullable=true)
+     */      
+    private $paginaWeb;
         
+
 
 
     /**
@@ -448,5 +454,28 @@ class GenConfiguracion
     public function getDireccionEmpresa()
     {
         return $this->direccionEmpresa;
+    }
+
+    /**
+     * Set paginaWeb
+     *
+     * @param string $paginaWeb
+     * @return GenConfiguracion
+     */
+    public function setPaginaWeb($paginaWeb)
+    {
+        $this->paginaWeb = $paginaWeb;
+
+        return $this;
+    }
+
+    /**
+     * Get paginaWeb
+     *
+     * @return string 
+     */
+    public function getPaginaWeb()
+    {
+        return $this->paginaWeb;
     }
 }

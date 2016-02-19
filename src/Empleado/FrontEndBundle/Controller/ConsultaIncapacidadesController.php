@@ -18,8 +18,7 @@ class ConsultaIncapacidadesController extends Controller
         $this->listar($form);         
         if($form->isValid()) {
             if($form->get('BtnExcel')->isClicked()) {
-                //$this->filtrarLista($form);
-                $this->listar();
+                $this->listar($form);
                 $this->generarExcel();
             }
         }
@@ -74,7 +73,8 @@ class ConsultaIncapacidadesController extends Controller
                     ->setCellValue('G1', 'CENTRO COSTO')
                     ->setCellValue('H1', 'DESDE')
                     ->setCellValue('I1', 'HASTA')
-                    ->setCellValue('J1', 'DÍAS');
+                    ->setCellValue('J1', 'DÍAS')
+                    ->setCellValue('K1', 'VR INCAPACIDAD');
 
         $i = 2;
         $query = $em->createQuery($this->strDqlLista);        
@@ -90,7 +90,8 @@ class ConsultaIncapacidadesController extends Controller
                     ->setCellValue('G' . $i, $arIncapacidad->getCentroCostoRel()->getNombre())
                     ->setCellValue('H' . $i, $arIncapacidad->getFechaDesde()->format('Y-m-d'))
                     ->setCellValue('I' . $i, $arIncapacidad->getFechaHasta()->format('Y-m-d'))
-                    ->setCellValue('J' . $i, $arIncapacidad->getCantidad());
+                    ->setCellValue('J' . $i, $arIncapacidad->getCantidad())
+                    ->setCellValue('K' . $i, "$ ". round($arIncapacidad->getVrIncapacidad(),0));
             $i++;
         }
 
