@@ -15,10 +15,6 @@ login_check:
 registro:
     pattern:   /registro
     defaults:  { _controller: EmpleadoFrontEndBundle:ProcesoRegistro:nuevo }
-
-recuperar_clave:
-    pattern:   /recuperar/clave
-    defaults:  { _controller: EmpleadoFrontEndBundle:ProcesoRegistro:nuevo }
     
 emp_usuario_consulta_carta_laboral:
     path:     /usuario/consulta/carta/laboral

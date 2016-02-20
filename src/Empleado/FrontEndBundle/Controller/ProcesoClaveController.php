@@ -62,57 +62,61 @@ class ProcesoClaveController extends Controller
                     $arUsuarioValidar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $numeroIdentificacion));                
                     if($arUsuarioValidar) {
                         if($arEmpleado->getCorreo()) {
-                            $arConfiguracion = new \Empleado\FrontEndBundle\Entity\GenConfiguracion();
-                            $arConfiguracion = $em->getRepository('EmpleadoFrontEndBundle:GenConfiguracion')->find(1);
-                            $arUsuarioAct = new \Empleado\FrontEndBundle\Entity\Usuario();
-                            $arUsuarioAct = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuarioValidar->getId());                            
-                            $psswd = substr( md5(microtime()), 1, 8);
-                            $arUsuarioAct->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
-                            $em->persist($arUsuarioAct);
-                            $em->flush();
-                            $strMensaje = "Se ha cambiado la clave con exito en la aplicacion para empleados de sogaApp <br />";
-                                        $strMensaje .= "<table border='2'>";
-                                        $strMensaje .= "<tr>";
-                                        $strMensaje .= "<th>CODIGO</th>";
-                                        $strMensaje .= "<th>IDENTIFICACION</th>";
-                                        $strMensaje .= "<th>NOMBRE</th>";
-                                        $strMensaje .= "<th>CLAVE NUEVA</th>";
-                                        $strMensaje .= "</tr>";
+                            if($arEmpleado->getEstadoContratoActivo() == 1) {
+                                $arConfiguracion = new \Empleado\FrontEndBundle\Entity\GenConfiguracion();
+                                $arConfiguracion = $em->getRepository('EmpleadoFrontEndBundle:GenConfiguracion')->find(1);
+                                $arUsuarioAct = new \Empleado\FrontEndBundle\Entity\Usuario();
+                                $arUsuarioAct = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuarioValidar->getId());                            
+                                $psswd = substr( md5(microtime()), 1, 8);
+                                $arUsuarioAct->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
+                                $em->persist($arUsuarioAct);
+                                $em->flush();
+                                $strMensaje = "Se ha cambiado la clave con exito en la aplicacion para empleados de sogaApp <br />";
+                                            $strMensaje .= "<table border='2'>";
+                                            $strMensaje .= "<tr>";
+                                            $strMensaje .= "<th>CODIGO</th>";
+                                            $strMensaje .= "<th>IDENTIFICACION</th>";
+                                            $strMensaje .= "<th>NOMBRE</th>";
+                                            $strMensaje .= "<th>CLAVE NUEVA</th>";
+                                            $strMensaje .= "</tr>";
 
-                                        $strMensaje .= "<tr>";
-                                        $strMensaje .= "<td>" . $arEmpleado->getCodigoEmpleadoPk() . "</td>";
-                                        $strMensaje .= "<td>" . $arEmpleado->getNumeroIdentificacion() . "</td>";
-                                        $strMensaje .= "<td>" . $arEmpleado->getNombreCorto() . "</td>";
-                                        $strMensaje .= "<td>" . $psswd . "</td>";
-                                        $strMensaje .= "</tr>";
+                                            $strMensaje .= "<tr>";
+                                            $strMensaje .= "<td>" . $arEmpleado->getCodigoEmpleadoPk() . "</td>";
+                                            $strMensaje .= "<td>" . $arEmpleado->getNumeroIdentificacion() . "</td>";
+                                            $strMensaje .= "<td>" . $arEmpleado->getNombreCorto() . "</td>";
+                                            $strMensaje .= "<td>" . $psswd . "</td>";
+                                            $strMensaje .= "</tr>";
 
-                                        $strMensaje .= "</table><br /><br />";
-                            $strMensaje .= "Recuerde cambiar su clave al ingresar a la aplicacion";
+                                            $strMensaje .= "</table><br /><br />";
+                                $strMensaje .= "Recuerde cambiar su clave al ingresar a la aplicacion";
 
-                            $message = \Swift_Message::newInstance()
-                                ->setSubject('Asignacion clave AppSoga para ' . $arConfiguracion->getNombreEmpresa())
-                                ->setFrom('jefedesarrollo@jgefectivo.com', "SogaApp" )
-                                ->setTo(strtolower($arEmpleado->getCorreo()))
-                                ->setBody($strMensaje,'text/html');
-                            $this->get('mailer')->send($message); 
-                            $this->get('session')->getFlashBag()->add("suceso", "Clave cambiada con exito, verifique su correo electronico " . strtolower($arEmpleado->getCorreo()) . " y vuelva a inicio de sesion");                            
-                                                
+                                $message = \Swift_Message::newInstance()
+                                    ->setSubject('Asignacion clave AppSoga para ' . $arConfiguracion->getNombreEmpresa())
+                                    ->setFrom('jefedesarrollo@jgefectivo.com', "SogaApp" )
+                                    ->setTo(strtolower($arEmpleado->getCorreo()))
+                                    ->setBody($strMensaje,'text/html');
+                                $this->get('mailer')->send($message); 
+                                $this->get('session')->getFlashBag()->add("suceso", "Clave cambiada con exito, verifique su correo electronico " . strtolower($arEmpleado->getCorreo()) . " y vuelva a inicio de sesion");                            
 
-                            /*$transport = \Swift_SmtpTransport::newInstance('mail.jgefectivo.com', 25)
-                              ->setUsername('jefedesarrollo@jgefectivo.com')
-                              ->setPassword('jefeD2015');
 
-                            $mailer = \Swift_Mailer::newInstance($transport);
-                            $message = \Swift_Message::newInstance('Prueba de correo')
-                              ->setFrom(array('sogainformacion@gmail.com' => 'prueba'))
-                              ->setTo(array('maestradaz3@gmail.com', 'other@domain.org' => 'A name'))
-                              ->setBody('Correo de prueba');
-                            // Send the message
-                            $result = $mailer->send($message);*/                                                                        
+                                /*$transport = \Swift_SmtpTransport::newInstance('mail.jgefectivo.com', 25)
+                                  ->setUsername('jefedesarrollo@jgefectivo.com')
+                                  ->setPassword('jefeD2015');
 
-                            //$em->flush();                            
+                                $mailer = \Swift_Mailer::newInstance($transport);
+                                $message = \Swift_Message::newInstance('Prueba de correo')
+                                  ->setFrom(array('sogainformacion@gmail.com' => 'prueba'))
+                                  ->setTo(array('maestradaz3@gmail.com', 'other@domain.org' => 'A name'))
+                                  ->setBody('Correo de prueba');
+                                // Send the message
+                                $result = $mailer->send($message);*/                                                                        
+
+                                //$em->flush();                                
+                            }  else {
+                                $this->get('session')->getFlashBag()->add("error", "El empleado ya se encuentra retirado de la compañia o no tiene contrato vigente");                            
+                            }                            
                         } else {
-                            $this->get('session')->getFlashBag()->add("error", "Este empleado no registra correo electronico por favor comuniquese con la empresa");                            
+                            $this->get('session')->getFlashBag()->add("error", "El empleado no registra correo electronico por favor comuniquese con la empresa");                            
                         }                       
                     } else {
                         $this->get('session')->getFlashBag()->add("error", "No es posible recuperar la clave porque el empleado aun no esta registrado");                            

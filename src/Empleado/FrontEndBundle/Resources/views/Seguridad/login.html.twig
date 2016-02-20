@@ -29,10 +29,11 @@
                 </div>                
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
                 <a class="btn btn-lg btn-default btn-block" href="{{ path('registro') }}">Resgistrarse</a>                                               
-                <center></center>
+                <center></center><br />
                 {% if error %}
-                    <div id="informacion" class="alert alert-block alert-error fade in" width="10px">                        
-                        <div>{{ error.message }}</div>
+                    <div id="error" class="alert alert-danger fade in" >
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p>Usuario y/o clave incorrecto para el ingreso</p>
                     </div>    
                 {% endif %}  
                 <blockquote>

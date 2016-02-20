@@ -189,6 +189,11 @@ class RhuEmpleado
     private $estadoActivo = 1;
     
     /**     
+     * @ORM\Column(name="estado_contrato_activo", type="boolean")
+     */    
+    private $estadoContratoActivo = 0;    
+    
+    /**     
      * @ORM\Column(name="cabeza_hogar", type="boolean")
      */    
     private $cabezaHogar= 0;
@@ -1669,5 +1674,28 @@ class RhuEmpleado
     public function getLiquidacionesEmpleadoRel()
     {
         return $this->liquidacionesEmpleadoRel;
+    }
+
+    /**
+     * Set estadoContratoActivo
+     *
+     * @param boolean $estadoContratoActivo
+     * @return RhuEmpleado
+     */
+    public function setEstadoContratoActivo($estadoContratoActivo)
+    {
+        $this->estadoContratoActivo = $estadoContratoActivo;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoContratoActivo
+     *
+     * @return boolean 
+     */
+    public function getEstadoContratoActivo()
+    {
+        return $this->estadoContratoActivo;
     }
 }
