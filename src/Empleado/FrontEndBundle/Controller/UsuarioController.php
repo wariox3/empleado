@@ -118,21 +118,24 @@ class UsuarioController extends Controller
             $arUsuarioValidar = new \Empleado\FrontEndBundle\Entity\Usuario();             
             $arUsuarioValidar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $form->get('numeroIdentificacion')->getData()));
             if(count($arUsuarioValidar) >= 0) {
-                $arEmpleado = new \Empleado\FrontEndBundle\Entity\RhuEmpleado();
-                $arEmpleado = $em->getRepository('EmpleadoFrontEndBundle:RhuEmpleado')->findOneBy(array('numeroIdentificacion' => $form->get('numeroIdentificacion')->getData()));
-                if(count($arEmpleado) > 0) {
-                    $arUsuario->setUsername($form->get('numeroIdentificacion')->getData());
-                    if ($form->get('password')->getData() != ""){
-                        $arUsuario->setPassword(password_hash($form->get('password')->getData(), PASSWORD_BCRYPT));
-                    }else {
-                        $arUsuario->setPassword($arUsuario->getPassword());
-                    }
-                    $arUsuario->setRoles($form->get('roles')->getData());
+                if($form->get('roles')->getData() == 'ROLE_ADMIN') {                                        
+                    $arUsuario->setEmail($form->get('email')->getData());
+                    $arUsuario->setNombre($form->get('nombre')->getData());
                     $em->persist($arUsuario);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
-                }else {
-                    echo "<br /><br /><br /><br />No existe el empleado";
+                    return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));                                           
+                } else {
+                    $arEmpleado = new \Empleado\FrontEndBundle\Entity\RhuEmpleado();
+                    $arEmpleado = $em->getRepository('EmpleadoFrontEndBundle:RhuEmpleado')->findOneBy(array('numeroIdentificacion' => $form->get('numeroIdentificacion')->getData()));
+                    if(count($arEmpleado) > 0) {
+                        $arUsuario->setEmail($form->get('email')->getData());
+                        $arUsuario->setNombre($form->get('nombre')->getData());
+                        $em->persist($arUsuario);
+                        $em->flush();
+                        return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
+                    }else {
+                        echo "<br /><br /><br /><br />No existe el empleado";
+                    }                    
                 }                
             } else {
                 echo "<br /><br /><br /><br />Este usuario no existe";

@@ -46,6 +46,7 @@ class ProcesoRegistroController extends Controller
                                             $strMensaje .= "<table border='2'>";
                                             $strMensaje .= "<tr>";
                                             $strMensaje .= "<th>CODIGO</th>";
+                                            $strMensaje .= "<th>USUARIO</th>";
                                             $strMensaje .= "<th>IDENTIFICACION</th>";
                                             $strMensaje .= "<th>NOMBRE</th>";
                                             $strMensaje .= "<th>CLAVE</th>";
@@ -53,6 +54,7 @@ class ProcesoRegistroController extends Controller
 
                                             $strMensaje .= "<tr>";
                                             $strMensaje .= "<td>" . $arEmpleado->getCodigoEmpleadoPk() . "</td>";
+                                            $strMensaje .= "<td>" . $arEmpleado->getNumeroIdentificacion() . "</td>";
                                             $strMensaje .= "<td>" . $arEmpleado->getNumeroIdentificacion() . "</td>";
                                             $strMensaje .= "<td>" . $arEmpleado->getNombreCorto() . "</td>";
                                             $strMensaje .= "<td>" . $psswd . "</td>";
