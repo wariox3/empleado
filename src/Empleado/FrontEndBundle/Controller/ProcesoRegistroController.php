@@ -37,6 +37,7 @@ class ProcesoRegistroController extends Controller
                                 $arUsuario->setCodigoEmpleadoFk($arEmpleado->getCodigoEmpleadoPk());
                                 $arUsuario->setNombre($arEmpleado->getNombreCorto());
                                 $arUsuario->setRoles('ROLE_USER');
+                                $arUsuario->setNumeroIdentificacion($arEmpleado->getNumeroIdentificacion());
                                 $psswd = substr( md5(microtime()), 1, 8);
                                 $arUsuario->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
                                 $em->persist($arUsuario);

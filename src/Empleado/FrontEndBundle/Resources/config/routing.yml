@@ -38,11 +38,19 @@ emp_admin_usuario_lista:
 
 emp_admin_usuario_nuevo:
     path:     /admin/usuario/nuevo/{codigoUsuario}
-    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:nuevo } 
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:nuevoUsuario } 
+
+emp_admin_usuario_nuevo_administrador:
+    path:     /admin/usuario/nuevo/administrador/{codigoUsuario}
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:nuevoAdministrador }    
     
 emp_admin_usuario_editar:
     path:     /admin/usuario/editar/{codigoUsuario}
     defaults: { _controller: EmpleadoFrontEndBundle:Usuario:editar } 
+    
+emp_admin_usuario_cambiar_clave:
+    path:     /admin/usuario/cambiar/clave/{codigoUsuario}
+    defaults: { _controller: EmpleadoFrontEndBundle:Usuario:cambiarClave }    
     
 emp_usuario_consulta_vacacion:
     path:     /usuario/consulta/vacaciones

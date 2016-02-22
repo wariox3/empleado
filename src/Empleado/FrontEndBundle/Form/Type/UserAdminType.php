@@ -4,7 +4,7 @@ namespace Empleado\FrontEndBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserType extends AbstractType
+class UserAdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -13,7 +13,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder            
-            ->add('numeroIdentificacion', 'text', array('required' => true))
+            ->add('nombre', 'text', array('required' => true))
+            ->add('email', 'text', array('required' => true))
+            ->add('username', 'text', array('required' => true))
             ->add('password', 'text', array('required' => true))
             ->add('guardar', 'submit', array('label' => 'Guardar'));
     }

@@ -4,6 +4,7 @@ namespace Empleado\FrontEndBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Empleado\FrontEndBundle\Form\Type\UserType;
+use Empleado\FrontEndBundle\Form\Type\UserAdminType;
 class UsuarioController extends Controller
 {
     var $strDqlLista = "";
@@ -22,7 +23,7 @@ class UsuarioController extends Controller
             ));
     }   
     
-    public function nuevoAction($codigoUsuario) {
+    public function nuevoUsuarioAction($codigoUsuario) {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();      
@@ -41,11 +42,12 @@ class UsuarioController extends Controller
                 $arEmpleado = $em->getRepository('EmpleadoFrontEndBundle:RhuEmpleado')->findOneBy(array('numeroIdentificacion' => $arUsuario->getNumeroIdentificacion()));
                 if(count($arEmpleado) > 0) {
                     $arUsuario->setUsername($arUsuario->getNumeroIdentificacion());
+                    $arUsuario->setNumeroIdentificacion($arUsuario->getNumeroIdentificacion());
                     $arUsuario->setEmail($arEmpleado->getCorreo());
                     $arUsuario->setIsActive(1);
                     $arUsuario->setCodigoEmpleadoFk($arEmpleado->getCodigoEmpleadoPk());
                     $arUsuario->setNombre($arEmpleado->getNombreCorto());
-                    $arUsuario->setRoles($arUsuario->getRoles());
+                    $arUsuario->setRoles('ROLE_USER');
                     $arUsuario->setPassword(password_hash($arUsuario->getPassword(), PASSWORD_BCRYPT));                    
                     $em->flush();
                     return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
@@ -61,6 +63,35 @@ class UsuarioController extends Controller
         ));
     } 
     
+    public function nuevoAdministradorAction($codigoUsuario) {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();      
+        if($codigoUsuario != 0) {
+            $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
+        }
+        $form = $this->createForm(new UserAdminType(), $arUsuario);
+        $form->handleRequest($request);
+        if ($form->isValid()) {            
+            $em->persist($arUsuario);
+            $arUsuario = $form->getData();
+            $arUsuarioValidar = new \Empleado\FrontEndBundle\Entity\Usuario();             
+            $arUsuarioValidar = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $arUsuario->getUsername()));
+            if(count($arUsuarioValidar) <= 0) {                                
+                $arUsuario->setIsActive(1);                                
+                $arUsuario->setRoles('ROLE_ADMIN');
+                $arUsuario->setPassword(password_hash($arUsuario->getPassword(), PASSWORD_BCRYPT));                    
+                $em->flush();
+                return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));                
+            } else {
+                echo "<br /><br /><br /><br />Este usuario ya existe";
+            }            
+        }
+        return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:nuevoAdministrador.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }     
+    
     public function editarAction($codigoUsuario) {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
@@ -73,9 +104,11 @@ class UsuarioController extends Controller
             $rol = "USUARIO";
         }
         $form = $this->createFormBuilder()
-            ->add('roles', 'choice', array('choices' => array($arUsuario->getRoles() => $rol ,'ROLE_ADMIN' => 'ADMINISTRADOR', 'ROLE_USER' => 'USUARIO')))
-            ->add('numeroIdentificacion', 'text', array('data' => $arUsuario->getNumeroIdentificacion(), 'required' => true))
-            ->add('password', 'password', array('data' => '', 'required' => false))                
+            ->add('roles', 'choice', array('choices' => array($arUsuario->getRoles() => $rol ,'ROLE_ADMIN' => 'ADMINISTRADOR', 'ROLE_USER' => 'USUARIO')))            
+            ->add('username', 'text', array('data' => $arUsuario->getUsername(), 'required' => true))
+            ->add('nombre', 'text', array('data' => $arUsuario->getNombre(), 'required' => true))
+            ->add('email', 'text', array('data' => $arUsuario->getEmail(), 'required' => false))
+            ->add('numeroIdentificacion', 'text', array('data' => $arUsuario->getNumeroIdentificacion(), 'required' => false))            
             ->add('guardar', 'submit', array('label' => 'Guardar'))            
             ->getForm();                    
         $form->handleRequest($request);
@@ -106,6 +139,36 @@ class UsuarioController extends Controller
             }            
         }
         return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:editar.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function cambiarClaveAction($codigoUsuario) {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();              
+        $arUsuario = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($codigoUsuario);
+        $form = $this->createFormBuilder()
+            ->add('clave', 'text', array('data' => '', 'required' => true))            
+            ->add('clave2', 'text', array('data' => '', 'required' => true))            
+            ->add('guardar', 'submit', array('label' => 'Guardar'))            
+            ->getForm();                    
+        $form->handleRequest($request);
+        if ($form->isValid()) {  
+            $strClave = $form->get('clave')->getData();
+            $strClave2 = $form->get('clave2')->getData();            
+            if($strClave == $strClave2) {
+                $strClave = password_hash($strClave, PASSWORD_BCRYPT);
+                $arUsuario->setPassword($strClave);
+                $em->persist($arUsuario);                        
+                $em->flush();
+                return $this->redirect($this->generateUrl('emp_admin_usuario_lista'));
+            } else {
+                echo "Las claves no coinciden";
+            }                                                                                                                  
+            
+        }
+        return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:cambiarClave.html.twig', array(
             'form' => $form->createView(),
         ));
     }

@@ -30,7 +30,7 @@
                 <th>IDENTIFICACIÓN</th>
                 <th>NOMBRE</th>                
                 <th></th>
-                <th></th>
+                <th></th>                
             </tr>
             {% for arUsuarios in arUsuarios %}
             <tr>
@@ -40,7 +40,7 @@
                 <td>{{ arUsuarios.numeroIdentificacion  }}</td>
                 <td>{{ arUsuarios.nombre  }}</td>                                                
                 <td style="text-align: center"><a href="{{ path('emp_admin_usuario_editar',{'codigoUsuario': arUsuarios.id})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_151_edit.png') }}" width=20 height=20 title="Editar el registro"></a></td>
-                <td><input type="checkbox" name="ChkSeleccionar[]" value="{{ arUsuarios.id }}" /></td>
+                <td style="text-align: center"><a href="{{ path('emp_admin_usuario_cambiar_clave',{'codigoUsuario': arUsuarios.id})}}"><img src="{{ asset('imagenes/bootstrap/glyphicons_240_rotation_lock.png') }}" width=20 height=20 title="Cambiar clave"></a></td>                
             </tr>
             {% endfor %}
         </table>
@@ -57,8 +57,11 @@
                 {{ form_widget(form.BtnExcel, { 'attr': {'class': 'btn btn-default btn-sm'} }) }}                
             </div>
             <div class="btn-group">
-                <a class="btn btn-default btn-sm" href="{{ path('emp_admin_usuario_nuevo', {'codigoUsuario': 0}) }}">Nuevo</a>
+                <a class="btn btn-default btn-sm" href="{{ path('emp_admin_usuario_nuevo', {'codigoUsuario': 0}) }}">Nuevo usuario</a>                
             </div>            
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" href="{{ path('emp_admin_usuario_nuevo_administrador', {'codigoUsuario': 0}) }}">Nuevo administrador</a>                                
+            </div>
         </div>
             
         
