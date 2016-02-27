@@ -64,6 +64,11 @@ class RhuDisciplinario
     private $codigoCentroCostoFk;
     
     /**
+     * @ORM\Column(name="codigo_usuario", type="string", length=50, nullable=true)
+     */    
+    private $codigoUsuario;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="RhuEmpleado", inversedBy="disciplinariosEmpleadoRel")
      * @ORM\JoinColumn(name="codigo_empleado_fk", referencedColumnName="codigo_empleado_pk")
      */
@@ -82,10 +87,12 @@ class RhuDisciplinario
     protected $centroCostoRel;
 
 
+
+
     /**
      * Get codigoDisciplinarioPk
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodigoDisciplinarioPk()
     {
@@ -96,6 +103,7 @@ class RhuDisciplinario
      * Set codigoDisciplinarioTipoFk
      *
      * @param integer $codigoDisciplinarioTipoFk
+     *
      * @return RhuDisciplinario
      */
     public function setCodigoDisciplinarioTipoFk($codigoDisciplinarioTipoFk)
@@ -108,7 +116,7 @@ class RhuDisciplinario
     /**
      * Get codigoDisciplinarioTipoFk
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodigoDisciplinarioTipoFk()
     {
@@ -119,6 +127,7 @@ class RhuDisciplinario
      * Set fecha
      *
      * @param \DateTime $fecha
+     *
      * @return RhuDisciplinario
      */
     public function setFecha($fecha)
@@ -131,7 +140,7 @@ class RhuDisciplinario
     /**
      * Get fecha
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFecha()
     {
@@ -142,6 +151,7 @@ class RhuDisciplinario
      * Set codigoEmpleadoFk
      *
      * @param integer $codigoEmpleadoFk
+     *
      * @return RhuDisciplinario
      */
     public function setCodigoEmpleadoFk($codigoEmpleadoFk)
@@ -154,7 +164,7 @@ class RhuDisciplinario
     /**
      * Get codigoEmpleadoFk
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodigoEmpleadoFk()
     {
@@ -165,6 +175,7 @@ class RhuDisciplinario
      * Set asunto
      *
      * @param string $asunto
+     *
      * @return RhuDisciplinario
      */
     public function setAsunto($asunto)
@@ -177,7 +188,7 @@ class RhuDisciplinario
     /**
      * Get asunto
      *
-     * @return string 
+     * @return string
      */
     public function getAsunto()
     {
@@ -188,6 +199,7 @@ class RhuDisciplinario
      * Set comentarios
      *
      * @param string $comentarios
+     *
      * @return RhuDisciplinario
      */
     public function setComentarios($comentarios)
@@ -200,7 +212,7 @@ class RhuDisciplinario
     /**
      * Get comentarios
      *
-     * @return string 
+     * @return string
      */
     public function getComentarios()
     {
@@ -211,6 +223,7 @@ class RhuDisciplinario
      * Set suspension
      *
      * @param string $suspension
+     *
      * @return RhuDisciplinario
      */
     public function setSuspension($suspension)
@@ -223,7 +236,7 @@ class RhuDisciplinario
     /**
      * Get suspension
      *
-     * @return string 
+     * @return string
      */
     public function getSuspension()
     {
@@ -234,6 +247,7 @@ class RhuDisciplinario
      * Set descargos
      *
      * @param string $descargos
+     *
      * @return RhuDisciplinario
      */
     public function setDescargos($descargos)
@@ -246,7 +260,7 @@ class RhuDisciplinario
     /**
      * Get descargos
      *
-     * @return string 
+     * @return string
      */
     public function getDescargos()
     {
@@ -257,6 +271,7 @@ class RhuDisciplinario
      * Set estadoAutorizado
      *
      * @param boolean $estadoAutorizado
+     *
      * @return RhuDisciplinario
      */
     public function setEstadoAutorizado($estadoAutorizado)
@@ -269,7 +284,7 @@ class RhuDisciplinario
     /**
      * Get estadoAutorizado
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEstadoAutorizado()
     {
@@ -280,6 +295,7 @@ class RhuDisciplinario
      * Set codigoCentroCostoFk
      *
      * @param integer $codigoCentroCostoFk
+     *
      * @return RhuDisciplinario
      */
     public function setCodigoCentroCostoFk($codigoCentroCostoFk)
@@ -292,7 +308,7 @@ class RhuDisciplinario
     /**
      * Get codigoCentroCostoFk
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodigoCentroCostoFk()
     {
@@ -303,6 +319,7 @@ class RhuDisciplinario
      * Set empleadoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuEmpleado $empleadoRel
+     *
      * @return RhuDisciplinario
      */
     public function setEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuEmpleado $empleadoRel = null)
@@ -315,7 +332,7 @@ class RhuDisciplinario
     /**
      * Get empleadoRel
      *
-     * @return \Empleado\FrontEndBundle\Entity\RhuEmpleado 
+     * @return \Empleado\FrontEndBundle\Entity\RhuEmpleado
      */
     public function getEmpleadoRel()
     {
@@ -326,6 +343,7 @@ class RhuDisciplinario
      * Set disciplinarioTipoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinarioTipo $disciplinarioTipoRel
+     *
      * @return RhuDisciplinario
      */
     public function setDisciplinarioTipoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinarioTipo $disciplinarioTipoRel = null)
@@ -338,7 +356,7 @@ class RhuDisciplinario
     /**
      * Get disciplinarioTipoRel
      *
-     * @return \Empleado\FrontEndBundle\Entity\RhuDisciplinarioTipo 
+     * @return \Empleado\FrontEndBundle\Entity\RhuDisciplinarioTipo
      */
     public function getDisciplinarioTipoRel()
     {
@@ -349,6 +367,7 @@ class RhuDisciplinario
      * Set centroCostoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuCentroCosto $centroCostoRel
+     *
      * @return RhuDisciplinario
      */
     public function setCentroCostoRel(\Empleado\FrontEndBundle\Entity\RhuCentroCosto $centroCostoRel = null)
@@ -361,10 +380,34 @@ class RhuDisciplinario
     /**
      * Get centroCostoRel
      *
-     * @return \Empleado\FrontEndBundle\Entity\RhuCentroCosto 
+     * @return \Empleado\FrontEndBundle\Entity\RhuCentroCosto
      */
     public function getCentroCostoRel()
     {
         return $this->centroCostoRel;
+    }
+
+    /**
+     * Set codigoUsuario
+     *
+     * @param string $codigoUsuario
+     *
+     * @return RhuDisciplinario
+     */
+    public function setCodigoUsuario($codigoUsuario)
+    {
+        $this->codigoUsuario = $codigoUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoUsuario
+     *
+     * @return string
+     */
+    public function getCodigoUsuario()
+    {
+        return $this->codigoUsuario;
     }
 }

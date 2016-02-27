@@ -25,7 +25,12 @@ class RhuContrato
     /**
      * @ORM\Column(name="codigo_clasificacion_riesgo_fk", type="integer")
      */    
-    private $codigoClasificacionRiesgoFk;    
+    private $codigoClasificacionRiesgoFk;
+    
+    /**
+     * @ORM\Column(name="codigo_motivo_terminacion_contrato_fk", type="integer", nullable=true)
+     */    
+    private $codigoMotivoTerminacionContratoFk;
     
     /**
      * @ORM\Column(name="fecha", type="date", nullable=true)
@@ -55,7 +60,17 @@ class RhuContrato
     /**
      * @ORM\Column(name="fecha_hasta", type="date", nullable=true)
      */    
-    private $fechaHasta; 
+    private $fechaHasta;
+    
+    /**
+     * @ORM\Column(name="fecha_prorroga_inicio", type="date", nullable=true)
+     */    
+    private $fechaProrrogaInicio;    
+    
+    /**
+     * @ORM\Column(name="fecha_prorroga_final", type="date", nullable=true)
+     */    
+    private $fechaProrrogaFinal;
     
     /**
      * @ORM\Column(name="numero", type="string", length=30, nullable=true)
@@ -156,7 +171,32 @@ class RhuContrato
     /**     
      * @ORM\Column(name="salario_integral", type="boolean")
      */    
-    private $salarioIntegral = 0;    
+    private $salarioIntegral = 0;  
+    
+    /**
+     * @ORM\Column(name="codigo_entidad_salud_fk", type="integer", nullable=true)
+     */    
+    private $codigoEntidadSaludFk;    
+
+    /**
+     * @ORM\Column(name="codigo_entidad_pension_fk", type="integer", nullable=true)
+     */    
+    private $codigoEntidadPensionFk;
+    
+    /**
+     * @ORM\Column(name="codigo_usuario", type="string", length=50, nullable=true)
+     */    
+    private $codigoUsuario;
+
+     /**
+     * @ORM\Column(name="codigo_entidad_caja_fk", type="integer", nullable=true)
+     */    
+    private $codigoEntidadCajaFk;
+    
+    /**
+     * @ORM\Column(name="codigo_ciudad_contrato_fk", type="integer", nullable=true)
+     */    
+    private $codigoCiudadContratoFk;
     
     /**
      * @ORM\ManyToOne(targetEntity="RhuEmpleado", inversedBy="contratosEmpleadoRel")
@@ -164,6 +204,11 @@ class RhuContrato
      */
     protected $empleadoRel;    
 
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuTipoTiempo", inversedBy="contratosTipoTiempoRel")
+     * @ORM\JoinColumn(name="codigo_tipo_tiempo_fk", referencedColumnName="codigo_tipo_tiempo_pk")
+     */
+    protected $tipoTiempoRel;     
     
     /**
      * @ORM\ManyToOne(targetEntity="RhuCentroCosto", inversedBy="empleadosCentroCostoRel")
@@ -175,34 +220,71 @@ class RhuContrato
      * @ORM\ManyToOne(targetEntity="RhuContratoTipo", inversedBy="contratosContratoTipoRel")
      * @ORM\JoinColumn(name="codigo_contrato_tipo_fk", referencedColumnName="codigo_contrato_tipo_pk")
      */
-    protected $contratoTipoRel;     
+    protected $contratoTipoRel;      
     
     /**
      * @ORM\ManyToOne(targetEntity="RhuCargo", inversedBy="contratosCargoRel")
      * @ORM\JoinColumn(name="codigo_cargo_fk", referencedColumnName="codigo_cargo_pk")
      */
-    protected $cargoRel;  
+    protected $cargoRel;           
     
     /**
-     * @ORM\OneToMany(targetEntity="RhuContrato", mappedBy="empleadoRel")
+     * @ORM\ManyToOne(targetEntity="RhuMotivoTerminacionContrato", inversedBy="contratosMotivoTerminacionContratoRel")
+     * @ORM\JoinColumn(name="codigo_motivo_terminacion_contrato_fk", referencedColumnName="codigo_motivo_terminacion_contrato_pk")
      */
-    protected $contratosEmpleadoRel;
+    protected $terminacionContratoRel;
     
     /**
-     * @ORM\ManyToOne(targetEntity="RhuTipoTiempo", inversedBy="contratosTipoTiempoRel")
-     * @ORM\JoinColumn(name="codigo_tipo_tiempo_fk", referencedColumnName="codigo_tipo_tiempo_pk")
+     * @ORM\ManyToOne(targetEntity="RhuEntidadSalud", inversedBy="contratosEntidadSaludRel")
+     * @ORM\JoinColumn(name="codigo_entidad_salud_fk", referencedColumnName="codigo_entidad_salud_pk")
      */
-    protected $tipoTiempoRel;   
+    protected $entidadSaludRel;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuEntidadPension", inversedBy="contratosEntidadPensionRel")
+     * @ORM\JoinColumn(name="codigo_entidad_pension_fk", referencedColumnName="codigo_entidad_pension_pk")
+     */
+    protected $entidadPensionRel;
+    
+    
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="contratoRel")
+     */
+    protected $liquidacionesContratoRel; 
+
+        
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RhuPago", mappedBy="contratoRel")
+     */
+    protected $pagosContratoRel;      
+    
+        
+
+        
+    
+        
     
     /**
      * @ORM\OneToMany(targetEntity="RhuVacacion", mappedBy="contratoRel")
      */
-    protected $vacacionesContratoRel;
+    protected $vacacionesContratoRel;             
     
-    /**
-     * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="liquidacionRel")
-     */
-    protected $liquidacionesAdicionalesLiquidacionRel;
+         
+
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /**
@@ -210,9 +292,9 @@ class RhuContrato
      */
     public function __construct()
     {
-        $this->contratosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidacionesContratoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pagosContratoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->vacacionesContratoRel = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->liquidacionesAdicionalesLiquidacionRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -269,6 +351,29 @@ class RhuContrato
     public function getCodigoClasificacionRiesgoFk()
     {
         return $this->codigoClasificacionRiesgoFk;
+    }
+
+    /**
+     * Set codigoMotivoTerminacionContratoFk
+     *
+     * @param integer $codigoMotivoTerminacionContratoFk
+     * @return RhuContrato
+     */
+    public function setCodigoMotivoTerminacionContratoFk($codigoMotivoTerminacionContratoFk)
+    {
+        $this->codigoMotivoTerminacionContratoFk = $codigoMotivoTerminacionContratoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoMotivoTerminacionContratoFk
+     *
+     * @return integer 
+     */
+    public function getCodigoMotivoTerminacionContratoFk()
+    {
+        return $this->codigoMotivoTerminacionContratoFk;
     }
 
     /**
@@ -407,6 +512,52 @@ class RhuContrato
     public function getFechaHasta()
     {
         return $this->fechaHasta;
+    }
+
+    /**
+     * Set fechaProrrogaInicio
+     *
+     * @param \DateTime $fechaProrrogaInicio
+     * @return RhuContrato
+     */
+    public function setFechaProrrogaInicio($fechaProrrogaInicio)
+    {
+        $this->fechaProrrogaInicio = $fechaProrrogaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaProrrogaInicio
+     *
+     * @return \DateTime 
+     */
+    public function getFechaProrrogaInicio()
+    {
+        return $this->fechaProrrogaInicio;
+    }
+
+    /**
+     * Set fechaProrrogaFinal
+     *
+     * @param \DateTime $fechaProrrogaFinal
+     * @return RhuContrato
+     */
+    public function setFechaProrrogaFinal($fechaProrrogaFinal)
+    {
+        $this->fechaProrrogaFinal = $fechaProrrogaFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaProrrogaFinal
+     *
+     * @return \DateTime 
+     */
+    public function getFechaProrrogaFinal()
+    {
+        return $this->fechaProrrogaFinal;
     }
 
     /**
@@ -870,6 +1021,121 @@ class RhuContrato
     }
 
     /**
+     * Set codigoEntidadSaludFk
+     *
+     * @param integer $codigoEntidadSaludFk
+     * @return RhuContrato
+     */
+    public function setCodigoEntidadSaludFk($codigoEntidadSaludFk)
+    {
+        $this->codigoEntidadSaludFk = $codigoEntidadSaludFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoEntidadSaludFk
+     *
+     * @return integer 
+     */
+    public function getCodigoEntidadSaludFk()
+    {
+        return $this->codigoEntidadSaludFk;
+    }
+
+    /**
+     * Set codigoEntidadPensionFk
+     *
+     * @param integer $codigoEntidadPensionFk
+     * @return RhuContrato
+     */
+    public function setCodigoEntidadPensionFk($codigoEntidadPensionFk)
+    {
+        $this->codigoEntidadPensionFk = $codigoEntidadPensionFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoEntidadPensionFk
+     *
+     * @return integer 
+     */
+    public function getCodigoEntidadPensionFk()
+    {
+        return $this->codigoEntidadPensionFk;
+    }
+
+    /**
+     * Set codigoUsuario
+     *
+     * @param string $codigoUsuario
+     * @return RhuContrato
+     */
+    public function setCodigoUsuario($codigoUsuario)
+    {
+        $this->codigoUsuario = $codigoUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoUsuario
+     *
+     * @return string 
+     */
+    public function getCodigoUsuario()
+    {
+        return $this->codigoUsuario;
+    }
+
+    /**
+     * Set codigoEntidadCajaFk
+     *
+     * @param integer $codigoEntidadCajaFk
+     * @return RhuContrato
+     */
+    public function setCodigoEntidadCajaFk($codigoEntidadCajaFk)
+    {
+        $this->codigoEntidadCajaFk = $codigoEntidadCajaFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoEntidadCajaFk
+     *
+     * @return integer 
+     */
+    public function getCodigoEntidadCajaFk()
+    {
+        return $this->codigoEntidadCajaFk;
+    }
+
+    /**
+     * Set codigoCiudadContratoFk
+     *
+     * @param integer $codigoCiudadContratoFk
+     * @return RhuContrato
+     */
+    public function setCodigoCiudadContratoFk($codigoCiudadContratoFk)
+    {
+        $this->codigoCiudadContratoFk = $codigoCiudadContratoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoCiudadContratoFk
+     *
+     * @return integer 
+     */
+    public function getCodigoCiudadContratoFk()
+    {
+        return $this->codigoCiudadContratoFk;
+    }
+
+    /**
      * Set empleadoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuEmpleado $empleadoRel
@@ -890,6 +1156,29 @@ class RhuContrato
     public function getEmpleadoRel()
     {
         return $this->empleadoRel;
+    }
+
+    /**
+     * Set tipoTiempoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuTipoTiempo $tipoTiempoRel
+     * @return RhuContrato
+     */
+    public function setTipoTiempoRel(\Empleado\FrontEndBundle\Entity\RhuTipoTiempo $tipoTiempoRel = null)
+    {
+        $this->tipoTiempoRel = $tipoTiempoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoTiempoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuTipoTiempo 
+     */
+    public function getTipoTiempoRel()
+    {
+        return $this->tipoTiempoRel;
     }
 
     /**
@@ -962,59 +1251,138 @@ class RhuContrato
     }
 
     /**
-     * Add contratosEmpleadoRel
+     * Set terminacionContratoRel
      *
-     * @param \Empleado\FrontEndBundle\Entity\RhuContrato $contratosEmpleadoRel
+     * @param \Empleado\FrontEndBundle\Entity\RhuMotivoTerminacionContrato $terminacionContratoRel
      * @return RhuContrato
      */
-    public function addContratosEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuContrato $contratosEmpleadoRel)
+    public function setTerminacionContratoRel(\Empleado\FrontEndBundle\Entity\RhuMotivoTerminacionContrato $terminacionContratoRel = null)
     {
-        $this->contratosEmpleadoRel[] = $contratosEmpleadoRel;
+        $this->terminacionContratoRel = $terminacionContratoRel;
 
         return $this;
     }
 
     /**
-     * Remove contratosEmpleadoRel
+     * Get terminacionContratoRel
      *
-     * @param \Empleado\FrontEndBundle\Entity\RhuContrato $contratosEmpleadoRel
+     * @return \Empleado\FrontEndBundle\Entity\RhuMotivoTerminacionContrato 
      */
-    public function removeContratosEmpleadoRel(\Empleado\FrontEndBundle\Entity\RhuContrato $contratosEmpleadoRel)
+    public function getTerminacionContratoRel()
     {
-        $this->contratosEmpleadoRel->removeElement($contratosEmpleadoRel);
+        return $this->terminacionContratoRel;
     }
 
     /**
-     * Get contratosEmpleadoRel
+     * Set entidadSaludRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuEntidadSalud $entidadSaludRel
+     * @return RhuContrato
+     */
+    public function setEntidadSaludRel(\Empleado\FrontEndBundle\Entity\RhuEntidadSalud $entidadSaludRel = null)
+    {
+        $this->entidadSaludRel = $entidadSaludRel;
+
+        return $this;
+    }
+
+    /**
+     * Get entidadSaludRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuEntidadSalud 
+     */
+    public function getEntidadSaludRel()
+    {
+        return $this->entidadSaludRel;
+    }
+
+    /**
+     * Set entidadPensionRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuEntidadPension $entidadPensionRel
+     * @return RhuContrato
+     */
+    public function setEntidadPensionRel(\Empleado\FrontEndBundle\Entity\RhuEntidadPension $entidadPensionRel = null)
+    {
+        $this->entidadPensionRel = $entidadPensionRel;
+
+        return $this;
+    }
+
+    /**
+     * Get entidadPensionRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuEntidadPension 
+     */
+    public function getEntidadPensionRel()
+    {
+        return $this->entidadPensionRel;
+    }
+
+    /**
+     * Add liquidacionesContratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesContratoRel
+     * @return RhuContrato
+     */
+    public function addLiquidacionesContratoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesContratoRel)
+    {
+        $this->liquidacionesContratoRel[] = $liquidacionesContratoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacionesContratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesContratoRel
+     */
+    public function removeLiquidacionesContratoRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesContratoRel)
+    {
+        $this->liquidacionesContratoRel->removeElement($liquidacionesContratoRel);
+    }
+
+    /**
+     * Get liquidacionesContratoRel
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getContratosEmpleadoRel()
+    public function getLiquidacionesContratoRel()
     {
-        return $this->contratosEmpleadoRel;
+        return $this->liquidacionesContratoRel;
     }
 
     /**
-     * Set tipoTiempoRel
+     * Add pagosContratoRel
      *
-     * @param \Empleado\FrontEndBundle\Entity\RhuTipoTiempo $tipoTiempoRel
+     * @param \Empleado\FrontEndBundle\Entity\RhuPago $pagosContratoRel
      * @return RhuContrato
      */
-    public function setTipoTiempoRel(\Empleado\FrontEndBundle\Entity\RhuTipoTiempo $tipoTiempoRel = null)
+    public function addPagosContratoRel(\Empleado\FrontEndBundle\Entity\RhuPago $pagosContratoRel)
     {
-        $this->tipoTiempoRel = $tipoTiempoRel;
+        $this->pagosContratoRel[] = $pagosContratoRel;
 
         return $this;
     }
 
     /**
-     * Get tipoTiempoRel
+     * Remove pagosContratoRel
      *
-     * @return \Empleado\FrontEndBundle\Entity\RhuTipoTiempo 
+     * @param \Empleado\FrontEndBundle\Entity\RhuPago $pagosContratoRel
      */
-    public function getTipoTiempoRel()
+    public function removePagosContratoRel(\Empleado\FrontEndBundle\Entity\RhuPago $pagosContratoRel)
     {
-        return $this->tipoTiempoRel;
+        $this->pagosContratoRel->removeElement($pagosContratoRel);
+    }
+
+    /**
+     * Get pagosContratoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPagosContratoRel()
+    {
+        return $this->pagosContratoRel;
     }
 
     /**
@@ -1048,38 +1416,5 @@ class RhuContrato
     public function getVacacionesContratoRel()
     {
         return $this->vacacionesContratoRel;
-    }
-
-    /**
-     * Add liquidacionesAdicionalesLiquidacionRel
-     *
-     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel
-     * @return RhuContrato
-     */
-    public function addLiquidacionesAdicionalesLiquidacionRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel)
-    {
-        $this->liquidacionesAdicionalesLiquidacionRel[] = $liquidacionesAdicionalesLiquidacionRel;
-
-        return $this;
-    }
-
-    /**
-     * Remove liquidacionesAdicionalesLiquidacionRel
-     *
-     * @param \Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel
-     */
-    public function removeLiquidacionesAdicionalesLiquidacionRel(\Empleado\FrontEndBundle\Entity\RhuLiquidacion $liquidacionesAdicionalesLiquidacionRel)
-    {
-        $this->liquidacionesAdicionalesLiquidacionRel->removeElement($liquidacionesAdicionalesLiquidacionRel);
-    }
-
-    /**
-     * Get liquidacionesAdicionalesLiquidacionRel
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getLiquidacionesAdicionalesLiquidacionRel()
-    {
-        return $this->liquidacionesAdicionalesLiquidacionRel;
     }
 }

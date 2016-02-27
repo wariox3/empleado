@@ -62,6 +62,11 @@ class GenConfiguracion
      * @ORM\Column(name="ruta_temporal", type="string", length=500, nullable=true)
      */      
     private $rutaTemporal;    
+
+    /**
+     * @ORM\Column(name="ruta_almacenamiento", type="string", length=500, nullable=true)
+     */      
+    private $rutaAlmacenamiento;    
     
     /**
      * @ORM\Column(name="nit_empresa", type="string", length=20, nullable=true)
@@ -91,15 +96,33 @@ class GenConfiguracion
     /**
      * @ORM\Column(name="direccion_empresa", type="string", length=120, nullable=true)
      */    
-    private $direccionEmpresa;  
+    private $direccionEmpresa;
+    
+    /**
+     * @ORM\Column(name="codigo_ciudad_fk", type="integer", nullable=true)
+     */
+    private $codigoCiudadFk;
+    
+    /**
+     * @ORM\Column(name="ruta_directorio", type="string", length=500, nullable=true)
+     */      
+    private $rutaDirectorio;
     
     /**
      * @ORM\Column(name="pagina_web", type="string", length=100, nullable=true)
      */      
     private $paginaWeb;
         
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="GenCiudad", inversedBy="configuracionesRel")
+     * @ORM\JoinColumn(name="codigo_ciudad_fk", referencedColumnName="codigo_ciudad_pk")
+     */
+    protected $ciudadRel;
 
+    
 
+    
 
     /**
      * Get codigoConfiguracionPk
@@ -319,6 +342,29 @@ class GenConfiguracion
     }
 
     /**
+     * Set rutaAlmacenamiento
+     *
+     * @param string $rutaAlmacenamiento
+     * @return GenConfiguracion
+     */
+    public function setRutaAlmacenamiento($rutaAlmacenamiento)
+    {
+        $this->rutaAlmacenamiento = $rutaAlmacenamiento;
+
+        return $this;
+    }
+
+    /**
+     * Get rutaAlmacenamiento
+     *
+     * @return string 
+     */
+    public function getRutaAlmacenamiento()
+    {
+        return $this->rutaAlmacenamiento;
+    }
+
+    /**
      * Set nitEmpresa
      *
      * @param string $nitEmpresa
@@ -457,6 +503,52 @@ class GenConfiguracion
     }
 
     /**
+     * Set codigoCiudadFk
+     *
+     * @param integer $codigoCiudadFk
+     * @return GenConfiguracion
+     */
+    public function setCodigoCiudadFk($codigoCiudadFk)
+    {
+        $this->codigoCiudadFk = $codigoCiudadFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoCiudadFk
+     *
+     * @return integer 
+     */
+    public function getCodigoCiudadFk()
+    {
+        return $this->codigoCiudadFk;
+    }
+
+    /**
+     * Set rutaDirectorio
+     *
+     * @param string $rutaDirectorio
+     * @return GenConfiguracion
+     */
+    public function setRutaDirectorio($rutaDirectorio)
+    {
+        $this->rutaDirectorio = $rutaDirectorio;
+
+        return $this;
+    }
+
+    /**
+     * Get rutaDirectorio
+     *
+     * @return string 
+     */
+    public function getRutaDirectorio()
+    {
+        return $this->rutaDirectorio;
+    }
+
+    /**
      * Set paginaWeb
      *
      * @param string $paginaWeb
@@ -477,5 +569,28 @@ class GenConfiguracion
     public function getPaginaWeb()
     {
         return $this->paginaWeb;
+    }
+
+    /**
+     * Set ciudadRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\GenCiudad $ciudadRel
+     * @return GenConfiguracion
+     */
+    public function setCiudadRel(\Empleado\FrontEndBundle\Entity\GenCiudad $ciudadRel = null)
+    {
+        $this->ciudadRel = $ciudadRel;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudadRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\GenCiudad 
+     */
+    public function getCiudadRel()
+    {
+        return $this->ciudadRel;
     }
 }

@@ -21,13 +21,26 @@ class RhuDisciplinarioTipo
      * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
      */    
     private $nombre; 
+    
+    /**
+     * @ORM\Column(name="codigo_contenido_formato_fk", type="integer", nullable=true)
+     */    
+    private $codigoContenidoFormatoFk;
        
     /**
      * @ORM\OneToMany(targetEntity="RhuDisciplinario", mappedBy="disciplinarioTipoRel")
      */
     protected $disciplinariosDisciplinarioTipoRel;    
-
-
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Empleado\FrontEndBundle\Entity\GenContenidoFormato", inversedBy="disciplinariosTiposContenidoFormatoRel")
+     * @ORM\JoinColumn(name="codigo_contenido_formato_fk", referencedColumnName="codigo_contenido_formato_pk")
+     */
+    protected $contenidoFormatoRel;
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -39,7 +52,7 @@ class RhuDisciplinarioTipo
     /**
      * Get codigoDisciplinarioTipoPk
      *
-     * @return integer 
+     * @return integer
      */
     public function getCodigoDisciplinarioTipoPk()
     {
@@ -50,6 +63,7 @@ class RhuDisciplinarioTipo
      * Set nombre
      *
      * @param string $nombre
+     *
      * @return RhuDisciplinarioTipo
      */
     public function setNombre($nombre)
@@ -62,7 +76,7 @@ class RhuDisciplinarioTipo
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -70,9 +84,34 @@ class RhuDisciplinarioTipo
     }
 
     /**
+     * Set codigoContenidoFormatoFk
+     *
+     * @param integer $codigoContenidoFormatoFk
+     *
+     * @return RhuDisciplinarioTipo
+     */
+    public function setCodigoContenidoFormatoFk($codigoContenidoFormatoFk)
+    {
+        $this->codigoContenidoFormatoFk = $codigoContenidoFormatoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoContenidoFormatoFk
+     *
+     * @return integer
+     */
+    public function getCodigoContenidoFormatoFk()
+    {
+        return $this->codigoContenidoFormatoFk;
+    }
+
+    /**
      * Add disciplinariosDisciplinarioTipoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosDisciplinarioTipoRel
+     *
      * @return RhuDisciplinarioTipo
      */
     public function addDisciplinariosDisciplinarioTipoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplinariosDisciplinarioTipoRel)
@@ -95,10 +134,34 @@ class RhuDisciplinarioTipo
     /**
      * Get disciplinariosDisciplinarioTipoRel
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDisciplinariosDisciplinarioTipoRel()
     {
         return $this->disciplinariosDisciplinarioTipoRel;
+    }
+
+    /**
+     * Set contenidoFormatoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\GenContenidoFormato $contenidoFormatoRel
+     *
+     * @return RhuDisciplinarioTipo
+     */
+    public function setContenidoFormatoRel(\Empleado\FrontEndBundle\Entity\GenContenidoFormato $contenidoFormatoRel = null)
+    {
+        $this->contenidoFormatoRel = $contenidoFormatoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get contenidoFormatoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\GenContenidoFormato
+     */
+    public function getContenidoFormatoRel()
+    {
+        return $this->contenidoFormatoRel;
     }
 }

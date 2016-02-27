@@ -194,13 +194,28 @@ class FormatoLiquidacion extends \FPDF_FPDF {
         $this->Cell(15, 5, "", 1, 0, 'R', 1);
         
         $this->SetXY($intX + 103, 102);
-        $this->Cell(25, 5, $arLiquidacion->getFechaUltimoPagoCesantias()->format('Y-m-d'), 1, 0, 'L', 1);
+        if ($arLiquidacion->getFechaUltimoPagoCesantias() == null){
+            $fechaUltimoPagoCesantias = "SIN FECHA";
+        } else {
+            $fechaUltimoPagoCesantias = $arLiquidacion->getFechaUltimoPagoCesantias()->format('Y-m-d');
+        }
+        $this->Cell(25, 5, $fechaUltimoPagoCesantias, 1, 0, 'L', 1);
         $this->SetXY($intX + 103, 108);
-        $this->Cell(25, 5, $arLiquidacion->getFechaUltimoPagoCesantias()->format('Y-m-d'), 1, 0, 'L', 1);
+        $this->Cell(25, 5, $fechaUltimoPagoCesantias, 1, 0, 'L', 1);
         $this->SetXY($intX + 103, 114);
-        $this->Cell(25, 5, $arLiquidacion->getFechaUltimoPagoPrimas()->format('Y-m-d'), 1, 0, 'L', 1);
+        if ($arLiquidacion->getFechaUltimoPagoPrimas() == null){
+            $fechaUltimoPagoPrimas = "SIN FECHA";
+        } else {
+            $fechaUltimoPagoPrimas = $arLiquidacion->getFechaUltimoPagoPrimas()->format('Y-m-d');
+        }
+        $this->Cell(25, 5, $fechaUltimoPagoPrimas, 1, 0, 'L', 1);
         $this->SetXY($intX + 103, 120);
-        $this->Cell(25, 5, $arLiquidacion->getFechaUltimoPagoVacaciones()->format('Y-m-d'), 1, 0, 'L', 1);
+        if ($arLiquidacion->getFechaUltimoPagoVacaciones() == null){
+            $fechaUltimoPagoVacaciones = "SIN FECHA";
+        } else {
+            $fechaUltimoPagoVacaciones = $arLiquidacion->getFechaUltimoPagoVacaciones()->format('Y-m-d');
+        }
+        $this->Cell(25, 5, $fechaUltimoPagoVacaciones, 1, 0, 'L', 1);
         $this->SetXY($intX + 103, 126);
         $this->Cell(25, 5, "", 1, 0, 'L', 1);
         $this->SetXY($intX + 103, 132);

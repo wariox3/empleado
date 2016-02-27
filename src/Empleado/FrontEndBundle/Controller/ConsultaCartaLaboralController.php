@@ -21,12 +21,12 @@ class ConsultaCartaLaboralController extends Controller
                 $arContrato = new \Empleado\FrontEndBundle\Entity\RhuContrato();
                 $arContrato = $em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->find($codigoContrato);
                 if ($arContrato->getEstadoActivo() == 1){
-                    $objFormatoCartaLaboral = new \Empleado\FrontEndBundle\Formatos\FormatoCartaLaboralVigente();
-                    $objFormatoCartaLaboral->Generar($this, $codigoContrato);
+                    $codigoCartaTipo = 5; //vigente
                 } else {
-                    $objFormatoCartaLaboral = new \Empleado\FrontEndBundle\Formatos\FormatoCartaLaboralRetirado();
-                    $objFormatoCartaLaboral->Generar($this, $codigoContrato);                   
+                    $codigoCartaTipo = 6; //retirado
                 }
+                $objFormatoCarta = new \Empleado\FrontEndBundle\Formatos\FormatoCarta();
+                $objFormatoCarta->Generar($this, $codigoCartaTipo, date('Y-m-d'), "", $codigoContrato);
             }
         }
         $arContratos = $paginator->paginate($em->createQuery($this->strDqlLista), $request->query->get('page', 1), 50);                                       

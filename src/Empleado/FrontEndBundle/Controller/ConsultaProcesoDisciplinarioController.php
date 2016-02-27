@@ -20,19 +20,9 @@ class ConsultaProcesoDisciplinarioController extends Controller
                 $codigoProcesoDisciplinario = $request->request->get('OpImprimir');
                 $arProcesoDisciplinario = new \Empleado\FrontEndBundle\Entity\RhuDisciplinario();
                 $arProcesoDisciplinario = $em->getRepository('EmpleadoFrontEndBundle:RhuDisciplinario')->find($codigoProcesoDisciplinario);
-                
-                if ($arProcesoDisciplinario->getCodigoDisciplinarioTipoFk() == 6){
-                   $objFormatoDisciplinarioSuspencion = new \Empleado\FrontEndBundle\Formatos\FormatoDisciplinarioSuspension();
-                   $objFormatoDisciplinarioSuspencion->Generar($this, $codigoProcesoDisciplinario);
-                }
-                if ($arProcesoDisciplinario->getCodigoDisciplinarioTipoFk() == 7) {
-                    $objFormatoDisciplinarioLlamadoAtencion = new \Empleado\FrontEndBundle\Formatos\FormatoDisciplinarioLlamadoAtencion();
-                    $objFormatoDisciplinarioLlamadoAtencion->Generar($this, $codigoProcesoDisciplinario);
-                }
-                if ($arProcesoDisciplinario->getCodigoDisciplinarioTipoFk() == 8) {
-                    $objFormatoDisciplinarioDescargo = new \Empleado\FrontEndBundle\Formatos\FormatoDisciplinarioDescargo();
-                    $objFormatoDisciplinarioDescargo->Generar($this, $codigoProcesoDisciplinario);
-                }
+                $codigoProcesoDisciplinarioTipo = $arProcesoDisciplinario->getCodigoDisciplinarioTipoFk();
+                $objFormatoCarta = new \Empleado\FrontEndBundle\Formatos\FormatoProcesoDisciplinario();
+                $objFormatoCarta->Generar($this, $codigoProcesoDisciplinarioTipo, $codigoProcesoDisciplinario);
             }
         }
         $arProcesoDisciplinarios = $paginator->paginate($em->createQuery($this->strDqlLista), $request->query->get('page', 1), 50);
