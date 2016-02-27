@@ -249,6 +249,12 @@ class RhuPago
     protected $centroCostoRel;
     
     /**
+     * @ORM\ManyToOne(targetEntity="RhuContrato", inversedBy="pagosContratoRel")
+     * @ORM\JoinColumn(name="codigo_contrato_fk", referencedColumnName="codigo_contrato_pk")
+     */
+    protected $contratoRel;
+    
+    /**
      * @ORM\OneToMany(targetEntity="RhuCreditoPago", mappedBy="pagoRel")
      */
     protected $creditosPagosPagoRel;
@@ -1349,5 +1355,28 @@ class RhuPago
     public function getCreditosPagosPagoRel()
     {
         return $this->creditosPagosPagoRel;
+    }
+
+    /**
+     * Set contratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel
+     * @return RhuPago
+     */
+    public function setContratoRel(\Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel = null)
+    {
+        $this->contratoRel = $contratoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get contratoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuContrato 
+     */
+    public function getContratoRel()
+    {
+        return $this->contratoRel;
     }
 }

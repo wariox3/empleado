@@ -191,7 +191,12 @@ class RhuEmpleado
     /**     
      * @ORM\Column(name="estado_contrato_activo", type="boolean")
      */    
-    private $estadoContratoActivo = 0;    
+    private $estadoContratoActivo = 0;
+
+    /**
+     * @ORM\Column(name="codigo_contrato_ultimo_fk", type="integer", nullable=true)
+     */    
+    private $codigoContratoUltimoFk;
     
     /**     
      * @ORM\Column(name="cabeza_hogar", type="boolean")
@@ -1697,5 +1702,28 @@ class RhuEmpleado
     public function getEstadoContratoActivo()
     {
         return $this->estadoContratoActivo;
+    }
+
+    /**
+     * Set codigoContratoUltimoFk
+     *
+     * @param integer $codigoContratoUltimoFk
+     * @return RhuEmpleado
+     */
+    public function setCodigoContratoUltimoFk($codigoContratoUltimoFk)
+    {
+        $this->codigoContratoUltimoFk = $codigoContratoUltimoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoContratoUltimoFk
+     *
+     * @return integer 
+     */
+    public function getCodigoContratoUltimoFk()
+    {
+        return $this->codigoContratoUltimoFk;
     }
 }

@@ -246,9 +246,6 @@ class RhuContrato
      */
     protected $entidadPensionRel;
     
-    
-    
-    
     /**
      * @ORM\OneToMany(targetEntity="RhuLiquidacion", mappedBy="contratoRel")
      */
@@ -260,12 +257,6 @@ class RhuContrato
      * @ORM\OneToMany(targetEntity="RhuPago", mappedBy="contratoRel")
      */
     protected $pagosContratoRel;      
-    
-        
-
-        
-    
-        
     
     /**
      * @ORM\OneToMany(targetEntity="RhuVacacion", mappedBy="contratoRel")

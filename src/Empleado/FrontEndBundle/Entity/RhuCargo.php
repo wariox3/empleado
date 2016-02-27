@@ -32,6 +32,10 @@ class RhuCargo
      */
     protected $empleadosCargoRel;   
     
+    /**
+     * @ORM\OneToMany(targetEntity="RhuDisciplinario", mappedBy="cargoRel")
+     */
+    protected $disciplianriosCargoRel;
     
     /**
      * Constructor
@@ -139,5 +143,38 @@ class RhuCargo
     public function getEmpleadosCargoRel()
     {
         return $this->empleadosCargoRel;
+    }
+
+    /**
+     * Add disciplianriosCargoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplianriosCargoRel
+     * @return RhuCargo
+     */
+    public function addDisciplianriosCargoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplianriosCargoRel)
+    {
+        $this->disciplianriosCargoRel[] = $disciplianriosCargoRel;
+
+        return $this;
+    }
+
+    /**
+     * Remove disciplianriosCargoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplianriosCargoRel
+     */
+    public function removeDisciplianriosCargoRel(\Empleado\FrontEndBundle\Entity\RhuDisciplinario $disciplianriosCargoRel)
+    {
+        $this->disciplianriosCargoRel->removeElement($disciplianriosCargoRel);
+    }
+
+    /**
+     * Get disciplianriosCargoRel
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDisciplianriosCargoRel()
+    {
+        return $this->disciplianriosCargoRel;
     }
 }

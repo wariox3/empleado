@@ -87,7 +87,11 @@ class RhuDisciplinario
     protected $centroCostoRel;
 
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="RhuCargo", inversedBy="disciplinariosCargoRel")
+     * @ORM\JoinColumn(name="codigo_cargo_fk", referencedColumnName="codigo_cargo_pk")
+     */
+    protected $cargoRel;
 
     /**
      * Get codigoDisciplinarioPk
@@ -409,5 +413,28 @@ class RhuDisciplinario
     public function getCodigoUsuario()
     {
         return $this->codigoUsuario;
+    }
+
+    /**
+     * Set cargoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuCargo $cargoRel
+     * @return RhuDisciplinario
+     */
+    public function setCargoRel(\Empleado\FrontEndBundle\Entity\RhuCargo $cargoRel = null)
+    {
+        $this->cargoRel = $cargoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get cargoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuCargo 
+     */
+    public function getCargoRel()
+    {
+        return $this->cargoRel;
     }
 }

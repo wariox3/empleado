@@ -68,7 +68,7 @@ class FormatoCarta extends \FPDF_FPDF {
         //se reemplaza el contenido de la tabla tipo de proceso disciplinario
         $sustitucion1 = $arContrato->getEmpleadoRel()->getNumeroIdentificacion();
         $sustitucion2 = $arContrato->getEmpleadoRel()->getNombreCorto();
-        $sustitucion3 = $arContrato->getEmpleadoRel()->getCargoRel()->getNombre();
+        $sustitucion3 = $arContrato->getCargoRel()->getNombre();
         $sustitucion4 = $arContrato->getFechaHasta()->format('Y-m-a');
         setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
         $sustitucion4 = strftime("%d de %B de %Y", strtotime($sustitucion4));
