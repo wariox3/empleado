@@ -26,7 +26,7 @@ class RhuPagoRepository extends EntityRepository {
     
     public function tiempoSuplementarioCartaLaboral($intPeriodo, $codigoContrato) {
         $em = $this->getEntityManager();
-        $dql   = "SELECT SUM(p.vrAdicionalValor) as suplementario FROM EmpleadoFrontEndBundle:RhuPago p  "
+        $dql   = "SELECT SUM(p.vrIngresoBasePrestacion) as suplementario FROM EmpleadoFrontEndBundle:RhuPago p  "
                 . "WHERE p.estadoPagado = 1 "
                 . "AND p.codigoContratoFk = " . $codigoContrato . " ";
         //$dql .= " LIMIT " . $intPeriodo . " ";
