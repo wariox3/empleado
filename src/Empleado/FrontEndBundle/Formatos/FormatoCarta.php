@@ -68,8 +68,8 @@ class FormatoCarta extends \FPDF_FPDF {
         if ($strPeriodo == "MENSUAL"){
             $intPeriodo = 1;
         }
-        $floSuplementario = self::$em->getRepository('EmpleadoFrontEndBundle:RhuPago')->tiempoSuplementarioCartaLaboral($intPeriodo, $arContrato->getCodigoContratoPk());            
-        $floPromedioSalario = $floSuplementario;
+        $arSuplementario = self::$em->getRepository('EmpleadoFrontEndBundle:RhuPago')->tiempoSuplementarioCartaLaboral($intPeriodo, $arContrato->getCodigoContratoPk());            
+        $floPromedioSalario = $arSuplementario;
         //fin promedio mensual
         $arCartaTipo = new \Empleado\FrontEndBundle\Entity\RhuCartaTipo();
         $arCartaTipo = self::$em->getRepository('EmpleadoFrontEndBundle:RhuCartaTipo')->find(self::$codigoTipoCarta);
@@ -90,27 +90,34 @@ class FormatoCarta extends \FPDF_FPDF {
         $sustitucion1 = $arContrato->getEmpleadoRel()->getNumeroIdentificacion();
         $sustitucion2 = $arContrato->getEmpleadoRel()->getNombreCorto();
         $sustitucion3 = $arContrato->getCargoRel()->getNombre();
-        $sustitucion4 = $arContrato->getFechaHasta()->format('Y-m-d');
-        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
-        $sustitucion4 = strftime("%d de %B de %Y", strtotime($sustitucion4));
+        if ($arContrato->getFechaProrrogaInicio() == null){
+            $sustitucion4 = $arContrato->getFechaDesde()->format('Y-m-d');
+            $sustitucion7 = $arContrato->getFechaHasta()->format('Y-m-d');
+            $feci = $arContrato->getFechaDesde();
+            $fecf = $arContrato->getFechaHasta();
+        } else {
+            $sustitucion4 = $arContrato->getFechaProrrogaInicio()->format('Y-m-d');
+            $sustitucion7 = $arContrato->getFechaProrrogaFinal()->format('Y-m-d');
+            $fechai = $arContrato->getFechaProrrogaInicio();
+            $fechaf = $arContrato->getFechaProrrogaFinal();
+        }
+        $sustitucion4 = strftime("%d de ". $this->MesesEspañol($feci->format('m')) ." de %Y", strtotime($sustitucion4));
         $sustitucion5 = $arConfiguracion->getNombreEmpresa();
-        if (self::$fechaOpcional == null){
+        if (self::$fechaOpcional == null ){
             $sustitucion6 = "";
         } else {
             $sustitucion6 = self::$fechaOpcional;
-            setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
-            $sustitucion6 = strftime("%d de %B de %Y", strtotime($sustitucion6->format('Y-m-d')));
+            $sustitucion6 = strftime("%d de ". $this->MesesEspañol($sustitucion6->format('m')) ." de %Y", strtotime($sustitucion6->format('Y-m-d')));
         }
-        $sustitucion7 = $arContrato->getFechaHasta()->format('Y-m-d');
-        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
-        $sustitucion7 = strftime("%d de %B de %Y", strtotime($sustitucion7));
+        $sustitucion7 = strftime("%d de ". $this->MesesEspañol($fecf->format('m')) ." de %Y", strtotime($sustitucion7));
         $sustitucion8 = $arContrato->getContratoTipoRel()->getNombre();
         $salarioLetras = self::$em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->numtoletras($arContrato->getVrSalario());
         $sustitucion9 = $salarioLetras." $(";
         $sustitucion9 .= number_format($arContrato->getVrSalario(), 2,'.',',');
         $sustitucion9 .= ")";
         $sustitucion10 = self::$fechaProceso;
-        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+        $dato = substr($sustitucion10, 5,2);
+        $sustitucion10 = strftime("%d de ". $this->MesesEspañol($dato) ." de %Y", strtotime($sustitucion10));
         $promedioSalarioLetras = self::$em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->numtoletras($floPromedioSalario);
         $sustitucion11 = $promedioSalarioLetras." $(";
         $sustitucion11 .= number_format($floPromedioSalario, 2,'.',',');
@@ -144,6 +151,48 @@ class FormatoCarta extends \FPDF_FPDF {
     public function Footer() {
         //$this->Cell(0,10,'Página '.$this->PageNo(),0,0,'C');
         $this->Image('imagenes/logos/piedepagina.jpg' , 65 ,208, 150 , 90,'JPG');
+    }  
+    
+    public static function MesesEspañol($mes) {
+        
+        if ($mes == 01){
+            $mesEspañol = "Enero";
+        }
+        if ($mes == 02){
+            $mesEspañol = "Febrero";
+        }
+        if ($mes == 03){
+            $mesEspañol = "Marzo";
+        }
+        if ($mes == 04){
+            $mesEspañol = "Abril";
+        }
+        if ($mes == 05){
+            $mesEspañol = "Mayo";
+        }
+        if ($mes == 06){
+            $mesEspañol = "Junio";
+        }
+        if ($mes == 07){
+            $mesEspañol = "Julio";
+        }
+        if ($mes == 08){
+            $mesEspañol = "Agosto";
+        }
+        if ($mes == 09){
+            $mesEspañol = "Septiembre";
+        }
+        if ($mes == 10){
+            $mesEspañol = "Octubre";
+        }
+        if ($mes == 11){
+            $mesEspañol = "Noviembre";
+        }
+        if ($mes == 12){
+            $mesEspañol = "Diciembre";
+        }
+
+        return $mesEspañol;
     }    
 }
 
