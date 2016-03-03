@@ -322,6 +322,12 @@ class RhuEmpleado
     protected $liquidacionesEmpleadoRel;
     
     /**
+     * @ORM\OneToMany(targetEntity="TurRecurso", mappedBy="empleadoRel")
+     */
+    protected $turRecursosEmpleadoRel;
+    
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -331,6 +337,7 @@ class RhuEmpleado
         $this->incapacidadesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->vacacionesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
         $this->liquidacionesEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->turRecursosEmpleadoRel = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1103,6 +1110,52 @@ class RhuEmpleado
     }
 
     /**
+     * Set estadoContratoActivo
+     *
+     * @param boolean $estadoContratoActivo
+     * @return RhuEmpleado
+     */
+    public function setEstadoContratoActivo($estadoContratoActivo)
+    {
+        $this->estadoContratoActivo = $estadoContratoActivo;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoContratoActivo
+     *
+     * @return boolean 
+     */
+    public function getEstadoContratoActivo()
+    {
+        return $this->estadoContratoActivo;
+    }
+
+    /**
+     * Set codigoContratoUltimoFk
+     *
+     * @param integer $codigoContratoUltimoFk
+     * @return RhuEmpleado
+     */
+    public function setCodigoContratoUltimoFk($codigoContratoUltimoFk)
+    {
+        $this->codigoContratoUltimoFk = $codigoContratoUltimoFk;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoContratoUltimoFk
+     *
+     * @return integer 
+     */
+    public function getCodigoContratoUltimoFk()
+    {
+        return $this->codigoContratoUltimoFk;
+    }
+
+    /**
      * Set cabezaHogar
      *
      * @param boolean $cabezaHogar
@@ -1682,48 +1735,35 @@ class RhuEmpleado
     }
 
     /**
-     * Set estadoContratoActivo
+     * Add turRecursosEmpleadoRel
      *
-     * @param boolean $estadoContratoActivo
+     * @param \Empleado\FrontEndBundle\Entity\TurRecurso $turRecursosEmpleadoRel
      * @return RhuEmpleado
      */
-    public function setEstadoContratoActivo($estadoContratoActivo)
+    public function addTurRecursosEmpleadoRel(\Empleado\FrontEndBundle\Entity\TurRecurso $turRecursosEmpleadoRel)
     {
-        $this->estadoContratoActivo = $estadoContratoActivo;
+        $this->turRecursosEmpleadoRel[] = $turRecursosEmpleadoRel;
 
         return $this;
     }
 
     /**
-     * Get estadoContratoActivo
+     * Remove turRecursosEmpleadoRel
      *
-     * @return boolean 
+     * @param \Empleado\FrontEndBundle\Entity\TurRecurso $turRecursosEmpleadoRel
      */
-    public function getEstadoContratoActivo()
+    public function removeTurRecursosEmpleadoRel(\Empleado\FrontEndBundle\Entity\TurRecurso $turRecursosEmpleadoRel)
     {
-        return $this->estadoContratoActivo;
+        $this->turRecursosEmpleadoRel->removeElement($turRecursosEmpleadoRel);
     }
 
     /**
-     * Set codigoContratoUltimoFk
+     * Get turRecursosEmpleadoRel
      *
-     * @param integer $codigoContratoUltimoFk
-     * @return RhuEmpleado
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setCodigoContratoUltimoFk($codigoContratoUltimoFk)
+    public function getTurRecursosEmpleadoRel()
     {
-        $this->codigoContratoUltimoFk = $codigoContratoUltimoFk;
-
-        return $this;
-    }
-
-    /**
-     * Get codigoContratoUltimoFk
-     *
-     * @return integer 
-     */
-    public function getCodigoContratoUltimoFk()
-    {
-        return $this->codigoContratoUltimoFk;
+        return $this->turRecursosEmpleadoRel;
     }
 }

@@ -58,7 +58,11 @@ emp_usuario_consulta_vacacion:
     
 emp_usuario_consulta_prestacion_final:
     path:     /usuario/consulta/prestaciones/finales
-    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPrestaciones:lista }   
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaPrestaciones:lista }
+    
+emp_usuario_consulta_programacion_turno:
+    path:     /usuario/consulta/programacion/turno
+    defaults: { _controller: EmpleadoFrontEndBundle:ConsultaProgramacion:lista }    
     
 emp_proceso_clave_cambiar:
     path:     /proceso/clave/cambiar
