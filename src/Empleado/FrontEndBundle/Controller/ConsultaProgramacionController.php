@@ -27,6 +27,14 @@ class ConsultaProgramacionController extends Controller
 
     private function listar($form) {
         $em = $this->getDoctrine()->getManager();
+        $dateFecha = new \DateTime('now');
+        $intAnio = $dateFecha->format('Y');
+        $intMes = $dateFecha->format('m');        
+        $intMesAnterior = $intMes - 1;
+        $intMesSiguiente = $intMes + 1;
+        if($intMesSiguiente > 12) {
+            $intMesSiguiente = 12;
+        }
         $arUsuario = new \Empleado\FrontEndBundle\Entity\Usuario();
         $arUsuario = $this->get('security.context')->getToken()->getUser();
         //$arRecurso = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->findOneBy(array('username' => $arUsuario->getUsername()));
@@ -34,7 +42,11 @@ class ConsultaProgramacionController extends Controller
         $arRecurso = $em->getRepository('EmpleadoFrontEndBundle:TurRecurso')->findOneBy(array('codigoEmpleadoFk' => $arEmpleado->getCodigoEmpleadoPk()));
         $this->strDqlLista = $em->getRepository('EmpleadoFrontEndBundle:TurProgramacionDetalle')->consultaDetalleDql(
                 $arRecurso->getCodigoRecursoPk(),
-                $form->get('TxtCodigoProcesoDisciplinario')->getData()
+                //$form->get('TxtCodigoProcesoDisciplinario')->getData(),
+                intval($intAnio),
+                intval($intMesAnterior),
+                intval($intMes),
+                intval($intMesSiguiente)
         );
     }
 
@@ -42,8 +54,8 @@ class ConsultaProgramacionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
         $form = $this->createFormBuilder()
-            ->add('TxtCodigoProcesoDisciplinario', 'text', array('label'  => 'CodigoProcesoDisciplinario','data' => ""))
-            ->add('BtnFiltrar', 'submit', array('label'  => 'Filtrar'))
+            //->add('TxtCodigoProcesoDisciplinario', 'text', array('label'  => 'CodigoProcesoDisciplinario','data' => ""))
+            //->add('BtnFiltrar', 'submit', array('label'  => 'Filtrar'))
             ->getForm();
         return $form;
     }

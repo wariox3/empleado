@@ -20,14 +20,17 @@ class TurProgramacionDetalleRepository extends EntityRepository {
         return $dql;
     }*/
     
-    public function consultaDetalleDql($codigoRecurso) {
+    public function consultaDetalleDql($codigoRecurso, $intAnio= "", $intMesAnterior = "",$intMes = "" ,$intMesSiguiente = "" ) {
         $em = $this->getEntityManager();
         $dql   = "SELECT pd FROM EmpleadoFrontEndBundle:TurProgramacionDetalle pd JOIN pd.programacionRel p JOIN pd.recursoRel r "
                 . "WHERE pd.codigoProgramacionDetallePk <> 0 ";
         
         if($codigoRecurso != '') {
-            $dql = $dql . "AND pd.codigoRecursoFk = " . $codigoRecurso;
-        }        
+            $dql = $dql . " AND pd.codigoRecursoFk = " . $codigoRecurso;
+        }      
+        if($intMes != '') {
+            $dql = $dql . " AND pd.anio = ". $intAnio ." AND (pd.mes = " . $intMes. " OR pd.mes = ". $intMesSiguiente. " OR pd.mes = " . $intMesAnterior .")";
+        }
         $dql .= " ORDER BY p.codigoClienteFk";
         return $dql;
     }    
