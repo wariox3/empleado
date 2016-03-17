@@ -147,12 +147,7 @@ class RhuPago
     /**
      * @ORM\Column(name="vr_vacaciones", type="float")
      */
-    private $vrVacaciones = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_administracion", type="float")
-     */
-    private $vrAdministracion = 0;    
+    private $vrVacaciones = 0;            
     
     /**
      * @ORM\Column(name="vr_neto", type="float")
@@ -162,12 +157,7 @@ class RhuPago
     /**
      * @ORM\Column(name="vr_bruto", type="float")
      */
-    private $vrBruto = 0;                
-    
-    /**
-     * @ORM\Column(name="vr_total_cobrar", type="float")
-     */
-    private $vrTotalCobrar = 0;    
+    private $vrBruto = 0;                      
 
     /**
      * @ORM\Column(name="vr_costo", type="float")
@@ -259,7 +249,7 @@ class RhuPago
      */
     protected $creditosPagosPagoRel;
     
-    
+
     /**
      * Constructor
      */
@@ -878,29 +868,6 @@ class RhuPago
     }
 
     /**
-     * Set vrAdministracion
-     *
-     * @param float $vrAdministracion
-     * @return RhuPago
-     */
-    public function setVrAdministracion($vrAdministracion)
-    {
-        $this->vrAdministracion = $vrAdministracion;
-
-        return $this;
-    }
-
-    /**
-     * Get vrAdministracion
-     *
-     * @return float 
-     */
-    public function getVrAdministracion()
-    {
-        return $this->vrAdministracion;
-    }
-
-    /**
      * Set vrNeto
      *
      * @param float $vrNeto
@@ -944,29 +911,6 @@ class RhuPago
     public function getVrBruto()
     {
         return $this->vrBruto;
-    }
-
-    /**
-     * Set vrTotalCobrar
-     *
-     * @param float $vrTotalCobrar
-     * @return RhuPago
-     */
-    public function setVrTotalCobrar($vrTotalCobrar)
-    {
-        $this->vrTotalCobrar = $vrTotalCobrar;
-
-        return $this;
-    }
-
-    /**
-     * Get vrTotalCobrar
-     *
-     * @return float 
-     */
-    public function getVrTotalCobrar()
-    {
-        return $this->vrTotalCobrar;
     }
 
     /**
@@ -1325,6 +1269,29 @@ class RhuPago
     }
 
     /**
+     * Set contratoRel
+     *
+     * @param \Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel
+     * @return RhuPago
+     */
+    public function setContratoRel(\Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel = null)
+    {
+        $this->contratoRel = $contratoRel;
+
+        return $this;
+    }
+
+    /**
+     * Get contratoRel
+     *
+     * @return \Empleado\FrontEndBundle\Entity\RhuContrato 
+     */
+    public function getContratoRel()
+    {
+        return $this->contratoRel;
+    }
+
+    /**
      * Add creditosPagosPagoRel
      *
      * @param \Empleado\FrontEndBundle\Entity\RhuCreditoPago $creditosPagosPagoRel
@@ -1355,28 +1322,5 @@ class RhuPago
     public function getCreditosPagosPagoRel()
     {
         return $this->creditosPagosPagoRel;
-    }
-
-    /**
-     * Set contratoRel
-     *
-     * @param \Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel
-     * @return RhuPago
-     */
-    public function setContratoRel(\Empleado\FrontEndBundle\Entity\RhuContrato $contratoRel = null)
-    {
-        $this->contratoRel = $contratoRel;
-
-        return $this;
-    }
-
-    /**
-     * Get contratoRel
-     *
-     * @return \Empleado\FrontEndBundle\Entity\RhuContrato 
-     */
-    public function getContratoRel()
-    {
-        return $this->contratoRel;
     }
 }
