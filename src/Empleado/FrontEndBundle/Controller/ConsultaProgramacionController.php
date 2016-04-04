@@ -45,8 +45,8 @@ class ConsultaProgramacionController extends Controller
                 //$form->get('TxtCodigoProcesoDisciplinario')->getData(),
                 intval($intAnio),
                 intval($intMesAnterior),
-                intval($intMes),
-                intval($intMesSiguiente)
+                intval($intMes)
+                //intval($intMesSiguiente)
         );
     }
 
