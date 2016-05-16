@@ -70,6 +70,8 @@ class FormatoCarta extends \FPDF_FPDF {
         }
         $arSuplementario = self::$em->getRepository('EmpleadoFrontEndBundle:RhuPago')->tiempoSuplementarioCartaLaboral($intPeriodo, $arContrato->getCodigoContratoPk());            
         $floPromedioSalario = $arSuplementario;
+        $arNoPrestacional = self::$em->getRepository('EmpleadoFrontEndBundle:RhuPago')->noPrestacionalCartaLaboral($intPeriodo, $arContrato->getCodigoContratoPk());            
+        $floNoPrestacional = $arNoPrestacional;
         //fin promedio mensual
         $arCartaTipo = new \Empleado\FrontEndBundle\Entity\RhuCartaTipo();
         $arCartaTipo = self::$em->getRepository('EmpleadoFrontEndBundle:RhuCartaTipo')->find(self::$codigoTipoCarta);
@@ -122,6 +124,10 @@ class FormatoCarta extends \FPDF_FPDF {
         $sustitucion11 = $promedioSalarioLetras." $(";
         $sustitucion11 .= number_format($floPromedioSalario, 2,'.',',');
         $sustitucion11 .= ")";
+        $floNoPrestacionalLetras = self::$em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->numtoletras($floNoPrestacional);
+        $sustitucion13 = $floNoPrestacionalLetras." $(";
+        $sustitucion13 .= number_format($floNoPrestacional, 2,'.',',');
+        $sustitucion13 .= ")";
         //$cadena = $arContenidoFormato->getContenido();
         $patron1 = '/#1/';
         $patron2 = '/#2/';
@@ -134,6 +140,7 @@ class FormatoCarta extends \FPDF_FPDF {
         $patron9 = '/#9/';
         $patron10 = '/#a/';
         $patron11 = '/#b/';
+        $patron13 = '/#d/';
         $cadenaCambiada = preg_replace($patron1, $sustitucion1, $cadena);
         $cadenaCambiada = preg_replace($patron2, $sustitucion2, $cadenaCambiada);
         $cadenaCambiada = preg_replace($patron3, $sustitucion3, $cadenaCambiada);
@@ -145,6 +152,7 @@ class FormatoCarta extends \FPDF_FPDF {
         $cadenaCambiada = preg_replace($patron9, $sustitucion9, $cadenaCambiada);
         $cadenaCambiada = preg_replace($patron10, $sustitucion10, $cadenaCambiada);
         $cadenaCambiada = preg_replace($patron11, $sustitucion11, $cadenaCambiada);
+        $cadenaCambiada = preg_replace($patron13, $sustitucion13, $cadenaCambiada);
         $pdf->MultiCell(0,5, $cadenaCambiada);
     }
 
