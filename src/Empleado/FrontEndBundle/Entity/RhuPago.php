@@ -97,7 +97,12 @@ class RhuPago
     /**
      * @ORM\Column(name="vr_adicional_valor", type="float")
      */
-    private $vrAdicionalValor = 0;    
+    private $vrAdicionalValor = 0; 
+    
+    /**
+     * @ORM\Column(name="vr_adicional_valor_no_prestacional", type="float")
+     */
+    private $vrAdicionalValorNoPrestasional = 0;
     
     /**
      * @ORM\Column(name="vr_auxilio_transporte", type="float")
@@ -1322,5 +1327,28 @@ class RhuPago
     public function getCreditosPagosPagoRel()
     {
         return $this->creditosPagosPagoRel;
+    }
+
+    /**
+     * Set vrAdicionalValorNoPrestasional
+     *
+     * @param float $vrAdicionalValorNoPrestasional
+     * @return RhuPago
+     */
+    public function setVrAdicionalValorNoPrestasional($vrAdicionalValorNoPrestasional)
+    {
+        $this->vrAdicionalValorNoPrestasional = $vrAdicionalValorNoPrestasional;
+
+        return $this;
+    }
+
+    /**
+     * Get vrAdicionalValorNoPrestasional
+     *
+     * @return float 
+     */
+    public function getVrAdicionalValorNoPrestasional()
+    {
+        return $this->vrAdicionalValorNoPrestasional;
     }
 }
