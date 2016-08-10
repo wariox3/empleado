@@ -50,6 +50,7 @@ class FormatoCarta extends \FPDF_FPDF {
         $arConfiguracion = self::$em->getRepository('EmpleadoFrontEndBundle:GenConfiguracion')->find(1);        
         $arContrato = new \Empleado\FrontEndBundle\Entity\RhuContrato();
         $arContrato = self::$em->getRepository('EmpleadoFrontEndBundle:RhuContrato')->find(self::$codigoContrato);        
+        $pdf->Image('imagenes/logos/firma.jpg' , 10 ,175, 50 , 30,'JPG');
         //Inicio promedio mensual
         $intPeriodo = 0;
         $strPeriodo = $arContrato->getCentroCostoRel()->getPeriodoPagoRel()->getNombre();
@@ -92,7 +93,7 @@ class FormatoCarta extends \FPDF_FPDF {
         $sustitucion1 = $arContrato->getEmpleadoRel()->getNumeroIdentificacion();
         $sustitucion2 = $arContrato->getEmpleadoRel()->getNombreCorto();
         $sustitucion3 = $arContrato->getCargoRel()->getNombre();
-        if ($arContrato->getFechaProrrogaInicio() == null){
+        /*if ($arContrato->getFechaProrrogaInicio() == null){
             $sustitucion4 = $arContrato->getFechaDesde()->format('Y-m-d');
             $sustitucion7 = $arContrato->getFechaHasta()->format('Y-m-d');
             $feci = $arContrato->getFechaDesde();
@@ -102,7 +103,9 @@ class FormatoCarta extends \FPDF_FPDF {
             $sustitucion7 = $arContrato->getFechaProrrogaFinal()->format('Y-m-d');
             $feci = $arContrato->getFechaProrrogaInicio();
             $fecf = $arContrato->getFechaProrrogaFinal();
-        }
+        }*/
+        $feci = $arContrato->getFechaDesde();
+        $fecf = $arContrato->getFechaHasta();
         $sustitucion4 = strftime("%d de ". $this->MesesEspañol($feci->format('m')) ." de %Y", strtotime($sustitucion4));
         $sustitucion5 = $arConfiguracion->getNombreEmpresa();
         if (self::$fechaOpcional == null ){
