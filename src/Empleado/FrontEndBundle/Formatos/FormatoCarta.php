@@ -104,6 +104,8 @@ class FormatoCarta extends \FPDF_FPDF {
             $feci = $arContrato->getFechaProrrogaInicio();
             $fecf = $arContrato->getFechaProrrogaFinal();
         }*/
+        $sustitucion4 = $arContrato->getFechaDesde()->format('Y-m-d');
+        $sustitucion7 = $arContrato->getFechaHasta()->format('Y-m-d');
         $feci = $arContrato->getFechaDesde();
         $fecf = $arContrato->getFechaHasta();
         $sustitucion4 = strftime("%d de ". $this->MesesEspañol($feci->format('m')) ." de %Y", strtotime($sustitucion4));
@@ -131,7 +133,7 @@ class FormatoCarta extends \FPDF_FPDF {
         $sustitucion13 = $floNoPrestacionalLetras." $(";
         $sustitucion13 .= number_format($floNoPrestacional, 2,'.',',');
         $sustitucion13 .= ")";
-        //$cadena = $arContenidoFormato->getContenido();
+        $cadena = $arContenidoFormato->getContenido();
         $patron1 = '/#1/';
         $patron2 = '/#2/';
         $patron3 = '/#3/';
