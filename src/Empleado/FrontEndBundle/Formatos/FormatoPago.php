@@ -218,7 +218,7 @@ class FormatoPago extends \FPDF_FPDF {
             $pdf->Cell(20, 4, number_format($arPago->getVrNeto(), 0, '.', ','), 1, 0, 'R');
             $pdf->Ln(8);
             // INFORMACION DE CREDITOS
-            $arPagoDetalles = new \Empleado\FrontEndBundle\Entity\RhuPagoDetalle();
+            /*$arPagoDetalles = new \Empleado\FrontEndBundle\Entity\RhuPagoDetalle();
             $arPagoDetalles = self::$em->getRepository('EmpleadoFrontEndBundle:RhuPagoDetalle')->findBy(array('codigoPagoFk' => self::$codigoPago));
                 $pdf->Cell(193, 4, utf8_decode("INFORMACIÓN DE CREDITOS"), 1, 0, 'L',true);
                 $pdf->Ln(4);
@@ -259,7 +259,7 @@ class FormatoPago extends \FPDF_FPDF {
                         $pdf->Ln();
                     }
                 
-                }
+                }*/
             $pdf->Ln(8);
             $pdf->SetFont('Arial', 'B', 7);
            
