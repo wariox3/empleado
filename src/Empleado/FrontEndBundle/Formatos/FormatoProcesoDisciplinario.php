@@ -66,11 +66,11 @@ class FormatoProcesoDisciplinario extends \FPDF_FPDF {
         $sustitucion1 = $arProcesoDisciplinario->getEmpleadoRel()->getNumeroIdentificacion();
         $sustitucion2 = $arProcesoDisciplinario->getEmpleadoRel()->getNombreCorto();
         $sustitucion3 = $arProcesoDisciplinario->getCargoRel()->getNombre();
-        $sustitucion4 = $arProcesoDisciplinario->getSuspension();
+        $sustitucion4 = $arProcesoDisciplinario->getDisciplinarioMotivoRel()->getNombre(); //suspencion
         $sustitucion5 = $arConfiguracion->getNombreEmpresa();
         $sustitucion6 = $arProcesoDisciplinario->getAsunto();
         $sustitucion7 = $arProcesoDisciplinario->getAsunto();
-        $sustitucion8 = $arProcesoDisciplinario->getDescargos();
+        $sustitucion8 = $arProcesoDisciplinario->getCargoRel()->getNombre(); //descargos
         //$cadena = $arContenidoFormato->getContenido();
         $patron1 = '/#1/';
         $patron2 = '/#2/';

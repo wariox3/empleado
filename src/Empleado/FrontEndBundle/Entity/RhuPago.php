@@ -112,47 +112,7 @@ class RhuPago
     /**
      * @ORM\Column(name="vr_auxilio_transporte_cotizacion", type="float")
      */
-    private $vrAuxilioTransporteCotizacion = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_arp", type="float")
-     */
-    private $vrArp = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_eps", type="float")
-     */
-    private $vrEps = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_pension", type="float")
-     */
-    private $vrPension = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_caja", type="float")
-     */
-    private $vrCaja = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_sena", type="float")
-     */
-    private $vrSena = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_icbf", type="float")
-     */
-    private $vrIcbf = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_cesantias", type="float")
-     */
-    private $vrCesantias = 0;    
-    
-    /**
-     * @ORM\Column(name="vr_vacaciones", type="float")
-     */
-    private $vrVacaciones = 0;            
+    private $vrAuxilioTransporteCotizacion = 0;                      
     
     /**
      * @ORM\Column(name="vr_neto", type="float")
@@ -255,6 +215,8 @@ class RhuPago
     protected $creditosPagosPagoRel;
     
 
+    
+    
     /**
      * Constructor
      */
@@ -643,6 +605,29 @@ class RhuPago
     }
 
     /**
+     * Set vrAdicionalValorNoPrestasional
+     *
+     * @param float $vrAdicionalValorNoPrestasional
+     * @return RhuPago
+     */
+    public function setVrAdicionalValorNoPrestasional($vrAdicionalValorNoPrestasional)
+    {
+        $this->vrAdicionalValorNoPrestasional = $vrAdicionalValorNoPrestasional;
+
+        return $this;
+    }
+
+    /**
+     * Get vrAdicionalValorNoPrestasional
+     *
+     * @return float 
+     */
+    public function getVrAdicionalValorNoPrestasional()
+    {
+        return $this->vrAdicionalValorNoPrestasional;
+    }
+
+    /**
      * Set vrAuxilioTransporte
      *
      * @param float $vrAuxilioTransporte
@@ -686,190 +671,6 @@ class RhuPago
     public function getVrAuxilioTransporteCotizacion()
     {
         return $this->vrAuxilioTransporteCotizacion;
-    }
-
-    /**
-     * Set vrArp
-     *
-     * @param float $vrArp
-     * @return RhuPago
-     */
-    public function setVrArp($vrArp)
-    {
-        $this->vrArp = $vrArp;
-
-        return $this;
-    }
-
-    /**
-     * Get vrArp
-     *
-     * @return float 
-     */
-    public function getVrArp()
-    {
-        return $this->vrArp;
-    }
-
-    /**
-     * Set vrEps
-     *
-     * @param float $vrEps
-     * @return RhuPago
-     */
-    public function setVrEps($vrEps)
-    {
-        $this->vrEps = $vrEps;
-
-        return $this;
-    }
-
-    /**
-     * Get vrEps
-     *
-     * @return float 
-     */
-    public function getVrEps()
-    {
-        return $this->vrEps;
-    }
-
-    /**
-     * Set vrPension
-     *
-     * @param float $vrPension
-     * @return RhuPago
-     */
-    public function setVrPension($vrPension)
-    {
-        $this->vrPension = $vrPension;
-
-        return $this;
-    }
-
-    /**
-     * Get vrPension
-     *
-     * @return float 
-     */
-    public function getVrPension()
-    {
-        return $this->vrPension;
-    }
-
-    /**
-     * Set vrCaja
-     *
-     * @param float $vrCaja
-     * @return RhuPago
-     */
-    public function setVrCaja($vrCaja)
-    {
-        $this->vrCaja = $vrCaja;
-
-        return $this;
-    }
-
-    /**
-     * Get vrCaja
-     *
-     * @return float 
-     */
-    public function getVrCaja()
-    {
-        return $this->vrCaja;
-    }
-
-    /**
-     * Set vrSena
-     *
-     * @param float $vrSena
-     * @return RhuPago
-     */
-    public function setVrSena($vrSena)
-    {
-        $this->vrSena = $vrSena;
-
-        return $this;
-    }
-
-    /**
-     * Get vrSena
-     *
-     * @return float 
-     */
-    public function getVrSena()
-    {
-        return $this->vrSena;
-    }
-
-    /**
-     * Set vrIcbf
-     *
-     * @param float $vrIcbf
-     * @return RhuPago
-     */
-    public function setVrIcbf($vrIcbf)
-    {
-        $this->vrIcbf = $vrIcbf;
-
-        return $this;
-    }
-
-    /**
-     * Get vrIcbf
-     *
-     * @return float 
-     */
-    public function getVrIcbf()
-    {
-        return $this->vrIcbf;
-    }
-
-    /**
-     * Set vrCesantias
-     *
-     * @param float $vrCesantias
-     * @return RhuPago
-     */
-    public function setVrCesantias($vrCesantias)
-    {
-        $this->vrCesantias = $vrCesantias;
-
-        return $this;
-    }
-
-    /**
-     * Get vrCesantias
-     *
-     * @return float 
-     */
-    public function getVrCesantias()
-    {
-        return $this->vrCesantias;
-    }
-
-    /**
-     * Set vrVacaciones
-     *
-     * @param float $vrVacaciones
-     * @return RhuPago
-     */
-    public function setVrVacaciones($vrVacaciones)
-    {
-        $this->vrVacaciones = $vrVacaciones;
-
-        return $this;
-    }
-
-    /**
-     * Get vrVacaciones
-     *
-     * @return float 
-     */
-    public function getVrVacaciones()
-    {
-        return $this->vrVacaciones;
     }
 
     /**
@@ -1327,28 +1128,5 @@ class RhuPago
     public function getCreditosPagosPagoRel()
     {
         return $this->creditosPagosPagoRel;
-    }
-
-    /**
-     * Set vrAdicionalValorNoPrestasional
-     *
-     * @param float $vrAdicionalValorNoPrestasional
-     * @return RhuPago
-     */
-    public function setVrAdicionalValorNoPrestasional($vrAdicionalValorNoPrestasional)
-    {
-        $this->vrAdicionalValorNoPrestasional = $vrAdicionalValorNoPrestasional;
-
-        return $this;
-    }
-
-    /**
-     * Get vrAdicionalValorNoPrestasional
-     *
-     * @return float 
-     */
-    public function getVrAdicionalValorNoPrestasional()
-    {
-        return $this->vrAdicionalValorNoPrestasional;
     }
 }

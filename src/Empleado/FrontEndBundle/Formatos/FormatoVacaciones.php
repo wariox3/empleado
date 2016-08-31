@@ -172,7 +172,8 @@ class FormatoVacaciones extends \FPDF_FPDF {
         $this->SetFont('Arial', '', 8);
         $this->SetFillColor(272, 272, 272);        
         $this->SetXY($intX, $intY);
-        $this->Cell(32, 5, number_format($arVacaciones->getVrVacacion() + $arVacaciones->getVrDeduccion()+ $arVacaciones->getVrSalud()+ $arVacaciones->getVrPension(), 0, '.', ','), 1, 0, 'R', 1);
+        //$this->Cell(32, 5, number_format($arVacaciones->getVrVacacion() + $arVacaciones->getVrDeduccion()+ $arVacaciones->getVrSalud()+ $arVacaciones->getVrPension(), 0, '.', ','), 1, 0, 'R', 1);
+        $this->Cell(32, 5, 0, 1, 0, 'R', 1);
         $this->SetXY($intX, $intY + 6);
         $this->Cell(32, 5, "(".number_format($arVacaciones->getVrSalud(), 0, '.', ',').")", 1, 0, 'R', 1);
         $this->SetXY($intX, $intY + 12);
@@ -183,7 +184,8 @@ class FormatoVacaciones extends \FPDF_FPDF {
         $this->SetXY($intX, $intY + 24);        
         $this->Cell(32, 5, number_format($floTotalDeducciones, 0, '.', ','), 1, 0, 'R', 1);
         $this->SetXY($intX, $intY + 30);
-        $this->Cell(32, 5, number_format($arVacaciones->getVrVacacion(), 0, '.', ','), 1, 0, 'R', 1);
+        //$this->Cell(32, 5, number_format($arVacaciones->getVrVacacion(), 0, '.', ','), 1, 0, 'R', 1);
+        $this->Cell(32, 5, 0, 1, 0, 'R', 1);
         //DEDUCCIONES CREDITOS TIPO VACACIÓN
         if ($duoRegistrosCreditos > 0){
             $intX = 10;

@@ -29,11 +29,9 @@
                         <th>CENTRO CENTRO</th>
                         <th>IDENTIFICACIÓN</th>
                         <th>NOMBRE</th>
-                        <th>CARGO</th>
                         <th>PROCESO</th>
-                        <th>CAUSAL</th>
-                        <th>DESCARGOS</th>
-                        <th>FECHA DE SUSPENSIÓN</th>
+                        <th>MOTIVO</th>
+                        <th>FECHA DEL INCIDENTE</th>
                         <th>AUTORIZADO</th>
                         <th style="text-align: center"></th>
                     </tr>
@@ -44,11 +42,9 @@
                             <td>{{ arProcesoDisciplinarios.centroCostoRel.nombre  }}</td>
                             <td>{{ arProcesoDisciplinarios.empleadoRel.numeroIdentificacion  }}</td>
                             <td>{{ arProcesoDisciplinarios.empleadoRel.nombreCorto  }}</td>
-                            <td>{{ arProcesoDisciplinarios.empleadoRel.cargoDescripcion  }}</td>
                             <td>{{ arProcesoDisciplinarios.disciplinarioTipoRel.nombre  }}</td>
-                            <td>{{ arProcesoDisciplinarios.asunto|default('NO APLICA')  }}</td>
-                            <td>{{ arProcesoDisciplinarios.descargos|default('NO APLICA')  }}</td>
-                            <td>{{ arProcesoDisciplinarios.suspension|default('NO APLICA')  }}</td>
+                            <td>{{ arProcesoDisciplinarios.disciplinarioMotivoRel.nombre |default('')  }}</td>
+                            <td>{{ arProcesoDisciplinarios.fechaIncidente | date('Y-m-d')  }}</td>
                             <td>{% if arProcesoDisciplinarios.estadoAutorizado == 1%}SI{% else %}NO{% endif %}</td>
                             <td style="text-align: center"><button class="btn btn-success" type="submit" name="OpImprimir" value="{{ arProcesoDisciplinarios.codigoDisciplinarioPk }}">DESCARGAR PROCESO DISCIPLINARIO</button></td>
                         </tr>
