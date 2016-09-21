@@ -97,7 +97,7 @@ class ProcesoClaveController extends Controller
                                     ->setBody($strMensaje,'text/html');
                                 $this->get('mailer')->send($message); 
                                 $this->get('session')->getFlashBag()->add("suceso", "Clave cambiada con exito, verifique su correo electronico " . strtolower($arEmpleado->getCorreo()) . " y vuelva a inicio de sesion");                            
-
+                                
 
                                 /*$transport = \Swift_SmtpTransport::newInstance('mail.jgefectivo.com', 25)
                                   ->setUsername('jefedesarrollo@jgefectivo.com')
