@@ -16,6 +16,23 @@ class UsuarioController extends Controller
         $form = $this->formularioLista();
         $form->handleRequest($request);        
         $this->listar();
+        if ($form->isValid()) {
+            if($form->get('BtnAsignarIdentificacionClave')->isClicked()) {
+                $arUsuarios = new \Empleado\FrontEndBundle\Entity\Usuario();
+                $query = $em->createQuery($this->strDqlLista);        
+                $arUsuarios = $query->getResult(); 
+                foreach ($arUsuarios as $arUsuario) {
+                    if($arUsuario->getRoles() == 'ROLE_USER') {
+                        $arUsuarioAct = new \Empleado\FrontEndBundle\Entity\Usuario();
+                        $arUsuarioAct = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuario->getId());
+                        $strClave = password_hash($arUsuario->getNumeroIdentificacion(), PASSWORD_BCRYPT);
+                        $arUsuarioAct->setPassword($strClave);
+                        $em->persist($arUsuarioAct);
+                    }
+                }                
+                $em->flush();
+            }
+        }
         $arUsuarios = $paginator->paginate($em->createQuery($this->strDqlLista), $request->query->get('page', 1), 50);                                       
         return $this->render('EmpleadoFrontEndBundle:Administracion/Usuarios:lista.html.twig', array(
             'form' => $form->createView(),
@@ -187,6 +204,7 @@ class UsuarioController extends Controller
         $form = $this->createFormBuilder()                                    
             ->add('TxtNumero', 'text', array('label'  => 'Numero','data' => ""))                                                               
             ->add('BtnExcel', 'submit', array('label'  => 'Excel',))
+            ->add('BtnAsignarIdentificacionClave', 'submit', array('label'  => 'Asignar el numero de identificacion a la clave'))                                            
             ->add('BtnFiltrar', 'submit', array('label'  => 'Filtrar'))                                            
             ->getForm();        
         return $form;

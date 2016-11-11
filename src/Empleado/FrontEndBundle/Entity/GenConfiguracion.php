@@ -113,6 +113,11 @@ class GenConfiguracion
      */      
     private $paginaWeb;
         
+    /**
+     * @ORM\Column(name="clave_identificacion_portal_empleados", type="boolean")
+     */    
+    private $claveIdentificacionPortalEmpleados = false;     
+    
     
     /**
      * @ORM\ManyToOne(targetEntity="GenCiudad", inversedBy="configuracionesRel")
@@ -592,5 +597,28 @@ class GenConfiguracion
     public function getCiudadRel()
     {
         return $this->ciudadRel;
+    }
+
+    /**
+     * Set claveIdentificacionPortalEmpleados
+     *
+     * @param boolean $claveIdentificacionPortalEmpleados
+     * @return GenConfiguracion
+     */
+    public function setClaveIdentificacionPortalEmpleados($claveIdentificacionPortalEmpleados)
+    {
+        $this->claveIdentificacionPortalEmpleados = $claveIdentificacionPortalEmpleados;
+
+        return $this;
+    }
+
+    /**
+     * Get claveIdentificacionPortalEmpleados
+     *
+     * @return boolean 
+     */
+    public function getClaveIdentificacionPortalEmpleados()
+    {
+        return $this->claveIdentificacionPortalEmpleados;
     }
 }
