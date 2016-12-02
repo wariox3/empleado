@@ -68,7 +68,8 @@ class ProcesoClaveController extends Controller
                                 $arUsuarioAct = new \Empleado\FrontEndBundle\Entity\Usuario();
                                 $arUsuarioAct = $em->getRepository('EmpleadoFrontEndBundle:Usuario')->find($arUsuarioValidar->getId());                            
                                 $psswd = substr( md5(microtime()), 1, 8);
-                                $arUsuarioAct->setPassword(password_hash($psswd, PASSWORD_BCRYPT));                                           
+                                $arUsuarioAct->setPassword(password_hash($psswd, PASSWORD_BCRYPT));
+                                $correoGeneral = $arConfiguracion->getCorreoGeneral();
                                 $em->persist($arUsuarioAct);
                                 $em->flush();
                                 $strMensaje = "Se ha cambiado la clave con exito en la aplicacion para empleados de sogaApp <br />";
@@ -92,7 +93,7 @@ class ProcesoClaveController extends Controller
 
                                 $message = \Swift_Message::newInstance()
                                     ->setSubject('Asignacion clave AppSoga para ' . $arConfiguracion->getNombreEmpresa())
-                                    ->setFrom('jefedesarrollo@jgefectivo.com', "SogaApp" )
+                                    ->setFrom($correoGeneral, "SogaApp" )
                                     ->setTo(strtolower($arEmpleado->getCorreo()))
                                     ->setBody($strMensaje,'text/html');
                                 $this->get('mailer')->send($message); 
