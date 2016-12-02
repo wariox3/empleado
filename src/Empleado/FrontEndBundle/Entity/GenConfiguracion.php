@@ -126,7 +126,10 @@ class GenConfiguracion
     protected $ciudadRel;
 
     
-
+    /**
+     * @ORM\Column(name="correo_general", type="string", length=100, nullable=true)
+     */    
+    private $correoGeneral;
     
 
     /**
@@ -620,5 +623,28 @@ class GenConfiguracion
     public function getClaveIdentificacionPortalEmpleados()
     {
         return $this->claveIdentificacionPortalEmpleados;
+    }
+
+    /**
+     * Set correoGeneral
+     *
+     * @param string $correoGeneral
+     * @return GenConfiguracion
+     */
+    public function setCorreoGeneral($correoGeneral)
+    {
+        $this->correoGeneral = $correoGeneral;
+
+        return $this;
+    }
+
+    /**
+     * Get correoGeneral
+     *
+     * @return string 
+     */
+    public function getCorreoGeneral()
+    {
+        return $this->correoGeneral;
     }
 }
