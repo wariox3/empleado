@@ -7,8 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ConsultaIncapacidadesController extends Controller
 {
     var $strDqlLista = "";
-    public function listaAction()
-    {        
+    public function listaAction() {        
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $paginator  = $this->get('knp_paginator');
