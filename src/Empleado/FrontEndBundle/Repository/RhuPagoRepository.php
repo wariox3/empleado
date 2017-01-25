@@ -18,7 +18,7 @@ class RhuPagoRepository extends EntityRepository {
             $dql .= " AND p.numero = " . $intNumero;
         }
         if($intTipo != "" && $intTipo != 0) {
-            $dql .= " AND p.codigoPagoTipoFk =" . $intTipo;
+            $dql .= " AND p.codigoPagoTipoFk =" . 1;
         }        
         $dql .= " ORDER BY p.codigoPagoPk DESC";
         return $dql;
