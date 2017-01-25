@@ -13,13 +13,13 @@ class RhuPagoRepository extends EntityRepository {
     
     public function listaDql($intCodigoEmpleado = "", $intNumero = 0, $intTipo = "") {        
         $em = $this->getEntityManager();
-        $dql   = "SELECT p FROM EmpleadoFrontEndBundle:RhuPago p WHERE p.codigoEmpleadoFk = " . $intCodigoEmpleado . " AND p.estadoPagado = 1";
+        $dql   = "SELECT p FROM EmpleadoFrontEndBundle:RhuPago p WHERE p.codigoEmpleadoFk = " . $intCodigoEmpleado . " AND p.estadoPagado = 1 AND p.codigoPagoTipoFk = 1 ";
         if($intNumero != "" && $intNumero != 0) {
             $dql .= " AND p.numero = " . $intNumero;
         }
-        if($intTipo != "" && $intTipo != 0) {
-            $dql .= " AND p.codigoPagoTipoFk =" . 1;
-        }        
+        /*if($intTipo != "" && $intTipo != 0) {
+            $dql .= " AND p.codigoPagoTipoFk = " . 1;
+        }*/        
         $dql .= " ORDER BY p.codigoPagoPk DESC";
         return $dql;
     }  
